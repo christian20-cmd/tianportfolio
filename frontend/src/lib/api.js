@@ -1,9 +1,7 @@
 // src/lib/api.js
 
-const API_BASE_URL = 'http://localhost:4000/api';
-
-// Origine du serveur (sans le /api), pour préfixer les URLs relatives (ex: /uploads/xxx.png)
-const SERVER_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, '');
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
+const SERVER_ORIGIN = import.meta.env.VITE_API_URL;
 
 export function getImageUrl(url) {
   if (!url) return '';

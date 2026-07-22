@@ -19,7 +19,7 @@ export default function ImageUploadField({ value, onChange }) {
       const formData = new FormData();
       formData.append("image", file);
 
-      const res = await fetch(`${API_URL}/upload`, {
+     const res = await fetch(`${API_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });
