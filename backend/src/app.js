@@ -23,7 +23,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://localhost:3000',
-    'https://christianportoflio-group.gitlab.io'
+    'https://christianportoflio-group.gitlab.io',
+    'https://christianportoflio-project-eaf4b9.gitlab.io'
   ],
   credentials: true
 }));
