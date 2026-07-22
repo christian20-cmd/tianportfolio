@@ -12,6 +12,8 @@ pages:
       if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - cd frontend
+    - echo "VITE_API_URL=$VITE_API_URL" > .env
+    - echo "VITE_UPLOADS_URL=$VITE_UPLOADS_URL" >> .env
     - npm install
     - npm run build
     - cp -r dist ../public
