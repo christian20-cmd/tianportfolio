@@ -1,0 +1,39 @@
+@import "tailwindcss";
+/* theme */
+@theme {
+  --font-fredoka: "Fredoka", sans-serif;
+  --font-borel: "Borel", cursive;
+  --font-baloo: "Baloo 2", cursive;
+  --font-poppins: "Poppins", sans-serif;
+}
+/* index.css */
+@media (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+/* src/index.css */
+.field-input {
+  @apply w-full rounded-full bg-white/10 px-6 py-2.5 text-xs text-white font-poppins outline-none transition-colors;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE et Edge */
+  scrollbar-width: none;    /* Firefox */
+}
