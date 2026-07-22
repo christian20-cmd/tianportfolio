@@ -14,7 +14,7 @@ pages:
     - cd frontend
     - npm install
     - npm run build
-    - cp -r build ../public   # adapte selon ton framework (build/ ou dist/)
+    - cp -r dist ../public
   artifacts:
     paths:
       - public
