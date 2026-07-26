@@ -7,14 +7,13 @@ import SeamlessCardGallery from "./SeamlessCardGallery";
 import MonitorFrame from "./MonitorFrame";
 import PhoneFrame from "./PhoneFrame";
 import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
-import { getImageUrl } from "../../lib/api";
 
 export default function ProjectShowcase({ project, onBack }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
   const isMobile = project.type === "mobile";
   const shot = project.screenshots?.[activeIndex];
-  const images = project.screenshots?.map((s) => getImageUrl(s.image || s.src)) ?? [];
+  const images = project.screenshots?.map((s) => s.image || s.src) ?? [];
 
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
@@ -31,7 +30,6 @@ export default function ProjectShowcase({ project, onBack }) {
   const handlePrev = () => goTo(activeIndex - 1);
   const handleNext = () => goTo(activeIndex + 1);
 
-  // ═══ Animation d'entrée du modal (bg fade + laptop scale/fade + panneau) ═══
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.set(bgRef.current, { opacity: 0 });
@@ -44,8 +42,6 @@ export default function ProjectShowcase({ project, onBack }) {
         "-=0.2"
       );
 
-      // Le slide en X est géré par Tailwind (translate-x) pour ne pas
-      // entrer en conflit avec l'état ouvert/fermé du panneau mobile.
       if (asideRef.current) {
         gsap.set(asideRef.current, { opacity: 0 });
         tl.to(asideRef.current, { opacity: 1, duration: 0.5 }, "-=0.4");
@@ -60,7 +56,6 @@ export default function ProjectShowcase({ project, onBack }) {
     if (!el || images.length < 2) return;
 
     const onWheel = (e) => {
-      // On ignore le scroll vertical (haut/bas) : on ne réagit qu'à l'horizontal
       if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
       if (Math.abs(e.deltaX) < 10) return;
 
@@ -81,7 +76,7 @@ export default function ProjectShowcase({ project, onBack }) {
   }, [activeIndex, images.length]);
 
   return (
-    <section ref={sectionRef} className="fixed inset-0 z-50 w-full h-full  overflow-hidden">
+    <section ref={sectionRef} className="fixed inset-0 z-50 w-full h-full overflow-hidden">
       <div
         ref={bgRef}
         className="pointer-events-none fixed inset-0 z-0"
@@ -94,7 +89,6 @@ export default function ProjectShowcase({ project, onBack }) {
         <div className="absolute inset-0 bg-black/70" />
       </div>
 
-      {/* Bouton retour (ferme tout le modal) */}
       <button
         type="button"
         onClick={() => onBack?.()}
@@ -103,7 +97,6 @@ export default function ProjectShowcase({ project, onBack }) {
         <ChevronLeft size={18} />
       </button>
 
-      {/* Bouton menu (ouvre/ferme le panneau infos sur mobile/tablette) */}
       <button
         type="button"
         onClick={() => setPanelOpen((p) => !p)}
@@ -126,7 +119,6 @@ export default function ProjectShowcase({ project, onBack }) {
         </span>
       </button>
 
-      {/* Overlay derrière le panneau mobile, cliquable pour fermer */}
       {panelOpen && (
         <div
           onClick={() => setPanelOpen(false)}
@@ -134,7 +126,6 @@ export default function ProjectShowcase({ project, onBack }) {
         />
       )}
       <div className="relative z-10 h-full flex flex-col lg:flex-row">
-        {/* Zone laptop : mockup flanqué de chevrons + galerie */}
         <main
           ref={mainRef}
           className="flex flex-1 min-h-0 flex-col items-center justify-center text-center overflow-hidden pt-6 pb-4 lg:pb-6"
@@ -183,21 +174,19 @@ export default function ProjectShowcase({ project, onBack }) {
           )}
         </main>
 
-        {/* Panneau de contenu : overlay glissant sur mobile/tablette, fixe à partir de lg */}
         <aside
           ref={asideRef}
           className={`fixed lg:static top-0 right-0 z-20 h-full font-poppins w-[85%] max-w-[340px] lg:w-[340px] flex flex-col gap-2 p-4 lg:p-6 shrink-0 justify-start bg-black/95 lg:bg-white/5 border-l border-white/10 overflow-y-auto overflow-x-hidden transition-transform duration-300 ease-out lg:translate-x-0 ${
             panelOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          {/* Photo de couverture, dans un mockup Monitor/Phone selon le type */}
           {project.image && (
             <div className="flex justify-center py-1">
               <div className="w-28">
                 {isMobile ? (
                   <PhoneFrame>
                     <img
-                      src={getImageUrl(project.image)}
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
@@ -205,7 +194,7 @@ export default function ProjectShowcase({ project, onBack }) {
                 ) : (
                   <MonitorFrame>
                     <img
-                      src={getImageUrl(project.image)}
+                      src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
@@ -279,10 +268,7 @@ export default function ProjectShowcase({ project, onBack }) {
               <ul className="flex flex-col gap-1.5">
                 {shot.traitement.map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-xs text-white/60 leading-snug">
-                    <span
-                      className="mt-1.5 h-1 w-1 rounded-full shrink-0"
-
-                    />👉 {item}
+                    <span className="mt-1.5 h-1 w-1 rounded-full shrink-0" />👉 {item}
                   </li>
                 ))}
               </ul>
@@ -294,21 +280,24 @@ export default function ProjectShowcase({ project, onBack }) {
               <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
                 Stack
               </span>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {project.tools.map((tool, i) => (
-                  <span
-                    key={i}
-                    title={tool.label}
-                    className="flex h-8 w-8 items-center justify-center rounded-full border border-white bg-white/5"
-                    style={{ color: tool.color }}
-                  >
-                    <tool.icon size={16} />
-                  </span>
+                  <div key={i} className="flex flex-col items-center gap-1 w-14">
+                    <span
+                      title={tool.label}
+                      className="flex h-8 w-8 items-center justify-center rounded-full border border-white/5 bg-white"
+                      style={{ color: tool.color }}
+                    >
+                      <tool.icon size={16} />
+                    </span>
+                    <span className="text-[9px] text-white/50 font-poppins text-center leading-tight">
+                      {tool.label}
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>
           )}
-
         </aside>
       </div>
     </section>

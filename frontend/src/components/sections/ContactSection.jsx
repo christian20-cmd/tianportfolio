@@ -160,7 +160,7 @@ export default function ContactSection() {
             </span>
             <div ref={barRightRef} className="bg-green-600 h-3 w-40"></div>
           </div>
-          <p ref={introRef} className="text-gray-600 text-sm max-w-[550px]">
+          <p ref={titleRef} className="text-gray-600 text-sm max-w-[550px]">
             {introText}
           </p>
         </div>

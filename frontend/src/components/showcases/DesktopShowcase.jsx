@@ -1,6 +1,6 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import MonitorFrame from './MonitorFrame';
-import { getImageUrl } from '../../lib/api';
+
 
 const MONITOR_MAX_WIDTH = 1347;
 const MONITOR_MAX_HEIGHT = 628;
@@ -12,7 +12,7 @@ export default function DesktopShowcase({ screenshots, activeIndex }) {
 
   const hasScreenshots = screenshots && screenshots.length > 0;
   const current = hasScreenshots ? (screenshots[activeIndex] || screenshots[0]) : null;
-  const imageUrl = current ? getImageUrl(current.src || current.image || '') : '';
+  const imageUrl = current ? (current.src || current.image || '') : '';
 
   const frameStyle = {
     maxWidth: `${MONITOR_MAX_WIDTH}px`,

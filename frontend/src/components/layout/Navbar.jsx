@@ -152,13 +152,13 @@ export default function Navbar() {
 
         <a
           ref={cvBtnRef}
-          href="frontend/src/assets/cv.pdf"
+          href="/cv.pdf"
           download
           className={`inline-flex items-center gap-2 rounded-full bg-black text-white font-medium hover:bg-gray-700 transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 ${
             scrolled ? "text-[11px] px-4 py-1.5" : "text-xs px-5 py-2"
           }`}
         >
-          Télecharger CV
+          Télécharger CV
         </a>
       </div>
     </nav>

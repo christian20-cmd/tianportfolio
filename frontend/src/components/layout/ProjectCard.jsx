@@ -66,7 +66,7 @@ export default function ProjectCard({ project, onClick }) {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleAction()}
-      className="relative w-full max-w-[320px] mx-auto aspect-[10/11] rounded-[24px] border-[5px] border-black bg-black/20 overflow-hidden shadow-lg group cursor-pointer"
+      className="relative w-full max-w-[320px] mx-auto aspect-[12/12] rounded-[24px] border-[5px] border-black bg-black/20 overflow-hidden shadow-lg group cursor-pointer"
     >
       {/* Image de fond (pleine card) ou fallback si pas d'image */}
       <div className="absolute inset-0">
@@ -74,7 +74,7 @@ export default function ProjectCard({ project, onClick }) {
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-500"
+            className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-500"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center">

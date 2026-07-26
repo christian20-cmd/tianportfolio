@@ -1,6 +1,6 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import PhoneFrame from './PhoneFrame';
-import { getImageUrl } from '../../lib/api';
+
 
 export default function MobileShowcase({ screenshots, activeIndex }) {
   const viewportRef = useRef(null);
@@ -9,7 +9,7 @@ export default function MobileShowcase({ screenshots, activeIndex }) {
 
   const hasScreenshots = screenshots && screenshots.length > 0;
   const current = hasScreenshots ? (screenshots[activeIndex] || screenshots[0]) : null;
-  const imageUrl = current ? getImageUrl(current.src || current.image || '') : '';
+  const imageUrl = current ? (current.src || current.image || '') : '';
 
   // Reset du scroll à chaque changement de slide
   useLayoutEffect(() => {

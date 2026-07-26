@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { SplitText } from 'gsap/SplitText'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
-import { Eye } from 'lucide-react'
+import { DownloadIcon } from 'lucide-react'
+import heroimage from '../../assets/heroimage.png'
 
 gsap.registerPlugin(SplitText, ScrollToPlugin)
 
@@ -17,7 +18,6 @@ const services = [
   'Développement Web',
   'Développement Mobile',
   'Backend & API',
-  'Déploiement',
   'Maintenance',
 ]
 
@@ -92,14 +92,7 @@ function Hero() {
     return () => ctx.revert()
   }, [])
 
-  // ═══ Scroll animé vers la section projets ═══
-  const handleExploreClick = () => {
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: { y: '#projets', offsetY: 100 },
-      ease: 'power2.inOut',
-    })
-  }
+
 
   return (
     <section
@@ -150,16 +143,13 @@ function Hero() {
               </p>
 
               <div ref={btnRef} className="mt-8 flex justify-center lg:justify-start items-center gap-4">
-                <button
-                  type="button"
-                  onClick={handleExploreClick}
-                  className="flex items-center text-xs gap-3 bg-black pl-6 pr-2 py-1.5 rounded-full shadow-md font-poppins text-white hover:shadow-lg transition"
+                <a
+                  href="/cv.pdf"
+                  download
+                  className="inline-flex items-center gap-2 justify-center w-full sm:w-auto sm:max-w-48 rounded-full bg-white text-gray-900 text-sm font-medium px-5 py-2 hover:bg-gray-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
                 >
-                  Explorer mes projets
-                  <span className="flex items-center justify-center w-7 h-7 rounded-full bg-green-600 text-white">
-                    <Eye size={18} />
-                  </span>
-                </button>
+                  Télécharger CV <DownloadIcon size={17} />
+                </a>
               </div>
             </div>
 
@@ -167,7 +157,7 @@ function Hero() {
             <div className="relative flex justify-center">
               <img
                 ref={imageRef}
-                src="src/assets/heroimage.png"
+                src={heroimage}
                 alt="Christian Nomenjanahary"
                 className="w-64 h-72 sm:w-72 sm:h-96 lg:w-[24rem] xl:h-[500px] object-cover object-top relative z-10"
               />
@@ -231,13 +221,13 @@ function Hero() {
       {/* Contenu dans la vague noire : services + copyright */}
       <div
         ref={footerRef}
-        className="absolute bottom-0 left-0 w-full z-30 flex items-center px-4 sm:px-10 lg:px-24 pb-4 sm:pb-6 pointer-events-none"
+        className="absolute bottom-0 left-0 w-full z-30 flex items-center justify-center px-4 sm:px-10 lg:px-24 pb-4 sm:pb-6 pointer-events-none"
       >
         <div className="flex items-center gap-3 sm:gap-4 lg:gap-6 overflow-x-auto pointer-events-auto scrollbar-none pr-4">
           {services.map((service) => (
             <span
               key={service}
-              className="flex items-center gap-1 text-[10px] sm:text-xs lg:text-lg font-fredoka uppercase tracking-wide text-green-600 hover:text-green-500 transition-colors whitespace-nowrap shrink-0"
+              className="flex items-center justify-between text-center gap-1 text-[10px] sm:text-xs lg:text-md font-fredoka uppercase tracking-wide text-green-600 hover:text-green-500 transition-colors whitespace-nowrap shrink-0"
             >
               {'.</'}
               <span className="text-white/35">{service}</span>

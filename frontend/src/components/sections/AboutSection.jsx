@@ -54,7 +54,7 @@ function AboutSection() {
   const descRef = useRef(null)
   const skillsRef = useRef(null)
   const skillItemsRef = useRef([])
-  const introRef = useRef(null)
+
   const barLeftRef = useRef(null)
   const barRightRef = useRef(null)
   const headerRef = useRef(null)
@@ -132,20 +132,7 @@ function AboutSection() {
         .to(barLeftRef.current, { scaleX: 1, duration: 0.7, ease: 'power3.out' })
         .to(barRightRef.current, { scaleX: 1, duration: 0.7, ease: 'power3.out' }, '<')
         // ═══ ScrambleText sur la description intro ═══
-        .to(
-          introRef.current,
-          {
-            scrambleText: {
-              text: introText,
-              chars: 'upperAndLowerCase',
-              revealDelay: 0.2,
-              tweenLength: true,
-            },
-            ease: 'power2.inOut',
-            duration: 2.2,
-          },
-          '-=0.3'
-        )
+        
 
       // Re-split au resize
       const handleResize = () => {
@@ -185,7 +172,7 @@ function AboutSection() {
             </span>
             <div ref={barRightRef} className="bg-green-600 h-2.5 sm:h-3 flex-1 max-w-16 sm:max-w-40"></div>
           </div>
-          <p ref={introRef} className='text-gray-600 text-xs sm:text-sm max-w-[550px]'>
+          <p ref={descRef} className='text-gray-600 text-xs sm:text-sm max-w-[550px]'>
             {introText}
           </p>
         </div>
@@ -256,7 +243,7 @@ function AboutSection() {
             </div>
             {/* Bouton CV */}
             <a
-              href="frontend/src/assets/cv.pdf"
+              href="/cv.pdf"
               download
               className="inline-flex items-center gap-2 justify-center w-full sm:w-auto sm:max-w-48 my-8 rounded-full bg-white text-gray-900 text-sm font-medium px-5 py-2 hover:bg-gray-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
             >

@@ -9,28 +9,15 @@ import Projets from '../components/sections/Projets'
 import ContactSection from '../components/sections/ContactSection'
 import ContactButton from '../components/layout/ContactButton'
 import ProjectShowcase from "../components/showcases/ProjectShowcase"
-import { api } from "../lib/api"
-import { formatProjectFromApi } from "../lib/formatProject"
 
 gsap.registerPlugin(ScrollToPlugin)
 
 export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState(null)
-  const [loadingProject, setLoadingProject] = useState(false)
 
-  // ═══ Récupère la version complète du projet (avec screenshots) avant d'ouvrir le showcase ═══
-  const handleProjectClick = async (project) => {
-    setLoadingProject(true)
-    try {
-      const full = await api.getProjectById(project.id)
-      setSelectedProject(formatProjectFromApi(full, undefined))
-    } catch (err) {
-      console.error("❌ Erreur récupération du projet complet:", err)
-      // Repli : affiche quand même ce qu'on a déjà (sans screenshots) plutôt que de bloquer l'utilisateur
-      setSelectedProject(project)
-    } finally {
-      setLoadingProject(false)
-    }
+  // ═══ Le projet vient déjà complet (avec screenshots) depuis data/projects.js ═══
+  const handleProjectClick = (project) => {
+    setSelectedProject(project)
   }
 
   const handleBack = () => {
@@ -51,7 +38,6 @@ export default function Portfolio() {
 
   return (
     <>
-
       <div className="relative min-h-screen bg-gradient-to-br font-fredoka from-gray-200 via-gray-100 to-gray-100">
         <div className="fixed inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none">
           <span className="text-[10rem] md:text-[24rem] font-baloo font-bold text-gray-900/5 select-none whitespace-nowrap">
@@ -70,12 +56,6 @@ export default function Portfolio() {
           <ContactButton />
         </div>
       </div>
-
-      {loadingProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <p className="text-xs text-white/60 font-poppins">Chargement...</p>
-        </div>
-      )}
 
       {selectedProject && (
         <ProjectShowcase project={selectedProject} onBack={handleBack} />

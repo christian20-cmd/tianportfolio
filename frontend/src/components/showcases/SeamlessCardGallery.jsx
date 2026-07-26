@@ -1,6 +1,5 @@
 // src/components/showcase/SeamlessCardGallery.jsx
 import { useRef, useEffect } from "react";
-import { getImageUrl } from "../../lib/api";
 
 export default function SeamlessCardGallery({ images = [], activeIndex = 0, onSelect }) {
   const cardsRef = useRef(null);
@@ -26,7 +25,7 @@ export default function SeamlessCardGallery({ images = [], activeIndex = 0, onSe
             className={`aspect-[14/8] w-[4.5rem] flex-none cursor-pointer rounded-lg border-2 bg-cover bg-center bg-no-repeat transition-all duration-200 ease-out hover:-translate-y-0.5 ${
               i === activeIndex ? "border-[#88ce02]" : "border-transparent"
             }`}
-            style={{ backgroundImage: `url(${getImageUrl(src)})`, scrollSnapAlign: "center" }}
+            style={{ backgroundImage: `url(${src})`, scrollSnapAlign: "center" }}
           />
         ))}
       </ul>

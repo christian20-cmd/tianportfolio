@@ -1,18 +1,20 @@
 // src/data/projects.js
 import {
   SiReact,
-  SiAngular,
-  SiSvelte,
   SiNodedotjs,
-  SiDjango,
-  SiPython,
-  SiMongodb,
+
   SiPostgresql,
   SiTailwindcss,
   SiDotnet,
   SiMysql,
   SiExpress,
+  SiPhp,
+  SiHtml5,
+  SiCss,
+  SiVite,
   SiGsap,
+  SiNodebb,
+  SiExpressdotcom,
 } from "react-icons/si";
 
 export const projects = [
@@ -24,9 +26,9 @@ export const projects = [
     categorie: "Cybersécurité & Supervision réseau",
     description:
       "Système ASP.NET Core avec ML.NET pour surveiller le trafic réseau et détecter automatique les comportements anormaux(Instrusions, DDos, scans de ports, malwares). Génère des alertes en temps réel de produit ds rapports d'analyse des anomalies détectées.",
-    role: "Développement full-stack",
+    role: "Développement full-stack et Réseau",
     client: "Projet personnel",
-    type: "desktop",
+    type: "Web",
     tools: [
       { icon: SiReact, label: "React", color: "#61DAFB" },
       { icon: SiDotnet, label: "Dotnet", color: "#339933" },
@@ -36,7 +38,6 @@ export const projects = [
     year: "2026",
     image: "src/assets/goodeyes/logoW.png",
     status: "local",
-    link: "https://mon-ecommerce.vercel.app",
     downloadLink: null,
     screenshots: [
       {
@@ -48,28 +49,6 @@ export const projects = [
           "Validation des champs côté client",
           "Redirection automatique vers le tableau de bord après connexion",
           "Gestion des erreurs de connexion (identifiants invalides)",
-        ],
-      },
-      {
-        src: "src/assets/goodeyes/alerte.png",
-        titre: "Alertes",
-        caption: "Système d'alertes automatiques sur intrusions détectées",
-        traitement: [
-          "Génération automatique d'alertes sur comportement anormal",
-          "Classification par type (Intrusion, DDoS, Malware, Scan de ports)",
-          "Filtrage des alertes par gravité et par date",
-          "Marquage des alertes comme traitées / ignorées",
-        ],
-      },
-      {
-        src: "src/assets/goodeyes/rapport.png",
-        titre: "Rapport",
-        caption: "Rapport d'analyse exportable des anomalies",
-        traitement: [
-          "Génération de rapports périodiques des anomalies détectées",
-          "Export au format PDF",
-          "Filtrage par période et par type d'anomalie",
-          "Visualisation graphique des tendances",
         ],
       },
       {
@@ -95,6 +74,18 @@ export const projects = [
         ],
       },
       {
+        src: "src/assets/goodeyes/alerte.png",
+        titre: "Alertes",
+        caption: "Système d'alertes automatiques sur intrusions détectées",
+        traitement: [
+          "Génération automatique d'alertes sur comportement anormal",
+          "Classification par type (Intrusion, DDoS, Malware, Scan de ports)",
+          "Filtrage des alertes par gravité et par date",
+          "Marquage des alertes comme traitées / ignorées",
+        ],
+      },
+
+      {
         src: "src/assets/goodeyes/ipbloque.png",
         titre: "IP bloquées",
         caption: "Gestion des adresses IP bloquées automatiquement ou manuellement",
@@ -105,6 +96,18 @@ export const projects = [
           "Filtrage par statut (bloquées / débloquées / toutes)",
         ],
       },
+      {
+        src: "src/assets/goodeyes/rapport.png",
+        titre: "Rapport",
+        caption: "Rapport d'analyse exportable des anomalies",
+        traitement: [
+          "Génération de rapports périodiques des anomalies détectées",
+          "Export au format PDF",
+          "Filtrage par période et par type d'anomalie",
+          "Visualisation graphique des tendances",
+        ],
+      },
+      
     ],
   },
   {
@@ -120,14 +123,13 @@ export const projects = [
     tools: [
       { icon: SiReact, label: "ReactNative", color: "#61DAFB" },
       { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
-      { icon: SiMysql, label: "HTML5", color: "#4169E1" },
+      { icon: SiMysql, label: "MySQL", color: "#4169E1" },
       { icon: SiNodedotjs, label: "Node.js", color: "#339933" },
       { icon: SiExpress, label: "Express.js", color: "#000" },
     ],
     year: "2026",
     image: "src/assets/3A/3ALogo.png",
     status: "local",
-    link: "https://ma-landing-page.vercel.app",
     downloadLink: null,
     screenshots: [
       {
@@ -136,11 +138,29 @@ export const projects = [
         caption: "Accueil — recherche d'avocat par spécialité",
         traitement: [
           "Connexion client ou avocat via un compte unique",
-          "Recherche d'avocats par spécialité",
-          "Filtrage par ville et disponibilité",
-          "Accès rapide au profil de chaque avocat",
         ],
       },
+      {
+        src: "src/assets/3A/dashboardclient.jpeg",
+        titre: "Tableau de bord client",
+        caption: "Suivi des rendez-vous pris par le client",
+        traitement: [
+          "Historique des rendez-vous passés et à venir",
+          "Statut de chaque rendez-vous (confirmé, en attente, annulé)",
+          "Accès rapide pour reprendre un nouveau rendez-vous",
+        ],
+      },
+      {
+        src: "src/assets/3A/ListavocatDispo.jpeg",
+        titre: "Liste des avocats disponibles",
+        caption: "Résultats de recherche filtrés par disponibilité",
+        traitement: [
+          "Liste des avocats disponibles selon les critères de recherche",
+         
+          "Accès direct à la prise de rendez-vous",
+        ],
+      },
+
       {
         src: "src/assets/3A/rdvavocat.jpeg",
         titre: "Prise de rendez-vous",
@@ -150,16 +170,6 @@ export const projects = [
           "Confirmation instantanée de la réservation",
           "Notification envoyée à l'avocat et au client",
           "Annulation ou modification du rendez-vous",
-        ],
-      },
-      {
-        src: "src/assets/3A/disponibilitepageavocat.jpeg",
-        titre: "Disponibilités avocat",
-        caption: "Gestion des créneaux disponibles par l'avocat",
-        traitement: [
-          "Ajout et retrait de créneaux disponibles",
-          "Vue calendrier des disponibilités",
-          "Blocage automatique des créneaux déjà réservés",
         ],
       },
       {
@@ -173,262 +183,150 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/3A/ListavocatDispo.jpeg",
-        titre: "Liste des avocats disponibles",
-        caption: "Résultats de recherche filtrés par disponibilité",
+        src: "src/assets/3A/disponibilitepageavocat.jpeg",
+        titre: "Disponibilités avocat",
+        caption: "Gestion des créneaux disponibles par l'avocat",
         traitement: [
-          "Liste des avocats disponibles selon les critères de recherche",
-          "Tri par note, spécialité ou proximité",
-          "Accès direct à la prise de rendez-vous",
+          "Ajout et retrait de créneaux disponibles",
+          "Vue calendrier des disponibilités",
+          "Blocage automatique des créneaux déjà réservés",
         ],
       },
-      {
-        src: "src/assets/3A/dashboardclient.jpeg",
-        titre: "Tableau de bord client",
-        caption: "Suivi des rendez-vous pris par le client",
-        traitement: [
-          "Historique des rendez-vous passés et à venir",
-          "Statut de chaque rendez-vous (confirmé, en attente, annulé)",
-          "Accès rapide pour reprendre un nouveau rendez-vous",
-        ],
-      },
+      
+      
+      
     ],
   },
+  
   {
     number: "03",
-    title: "Portfolio Site",
-    slug: "portfolio-site",
-    tagline: "Site vitrine personnel",
-    categorie: "Portfolio & Vitrine personnelle",
+    title: "N Studio",
+    slug: "nstudio",
+    tagline: "Studio photo, vidéo & son",
+    categorie: "Site Vitrine d'entreprise",
     description:
-      "Portfolio responsive avec animations fluides et intégration CMS headless.",
-    role: "Développement frontend & animations",
-    client: "Projet personnel",
+      "Site vitrine développé pour N Studio, un studio de production photo, vidéo et audio basé à Fianarantsoa. Le site présente les services (photo, vidéo, confection, conception, impression), une galerie de réalisations, une section audio interactive et une FAQ. Interface sombre et moderne réalisée avec React, Tailwind CSS et GSAP pour les animations.",
+    role: "Développement frontend",
+    client: "NIZANAKOLONA Studio",
     type: "web",
     tools: [
       { icon: SiReact, label: "ReactNative", color: "#61DAFB" },
       { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
-      { icon: SiGsap, label: "GSAP", color: "#0FE84A" },
     ],
     year: "2025",
-    image: "src/assets/Nstudios/Nizanakolona N 1.png",
-    status: "deployed",
-    link: "https://mon-portfolio.vercel.app",
+    image: "src/assets/Nstudios/LogoNstudio.png",
+    status: "local",
     downloadLink: null,
     screenshots: [
       {
-        src: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=1400&q=80",
+        src: "/src/assets/Nstudios/accueil.png",
         titre: "Accueil",
-        caption: "Section hero avec animations d'entrée fluides",
+        caption: "Page d'accueil avec présentation du studio, section vidéo et FAQ.",
         traitement: [
-          "Animation d'entrée au chargement de la page",
-          "Présentation rapide (nom, rôle, accroche)",
-          "Navigation fixe vers les autres sections",
+          "Hero avec vidéo de fond",
+          "Section présentation",
+          
         ],
       },
       {
-        src: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=1400&q=80",
-        titre: "Projets",
-        caption: "Grille de projets avec transitions au scroll",
+        src: "/src/assets/Nstudios/Nstudio.png",
+        titre: "N Studio",
+        caption: "Galerie photo/vidéo et section audio présentant les réalisations du studio.",
         traitement: [
-          "Affichage des projets sous forme de grille",
-          "Animation d'apparition au scroll",
-          "Ouverture d'un aperçu détaillé au clic sur un projet",
+          "Galerie masonry",
+          "Lecteur audio intégré",
+          "FAQ interactive",
+        ],
+      },
+      {
+        src: "/src/assets/Nstudios/Apropos.png",
+        titre: "A propos",
+        caption: "Présentation détaillée des services : photo, vidéo, confection, conception, impression, avec statistiques et section contact.",
+        traitement: [
+          "Carte Services animées ",
+          "Statistiques (+5ans, +20 clients)",
+          "Call-to-actions",
+
         ],
       },
     ],
   },
   {
     number: "04",
-    title: "Site Vitrine N Studio",
-    slug: "n-studio",
-    tagline: "Site vitrine d'un Entreprise",
-    categorie: "Vitrine d'entreprise",
+    title: "Books",
+    slug: "books",
+    tagline: "Gestion et vente de livres en ligne",
+    categorie: "Application Web / e-commerce",
     description:
-      "Portfolio responsive avec animations fluides et intégration CMS headless.",
-    role: "Développement frontend",
-    client: "N Studio",
+      "Books est une application complète de gestion de librairie composée de deux interfaces : un administrateur permettant d'ajouter, modifier, publier/dépublier et gérer le stock des livres, et un site client permettant aux visiteurs de parcourir le catalogue, rechercher par titre/auteur/type, consulter les disponibilités et ajouter des livres au panier. L'ensemble propose une gestion de stock en temps réel, un système de recherche et de filtres par catégorie, ainsi qu'un formulaire de contact.",
+    role: "Développement full-stack",
+    client: "Projet Commandé par un client",
     type: "web",
     tools: [
-      { icon: SiReact, label: "ReactNative", color: "#61DAFB" },
-      { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
+      { icon: SiPhp, label: "php", color: "#3776AB" },
+      { icon: SiMysql, label: "mysql", color: "#4169E1" },
+      { icon: SiHtml5, label: "html", color: "#E34F26" },
+      { icon: SiCss, label: "css", color: "#6924CE" },
     ],
-    year: "2025",
-    image: "src/assets/Nstudios/Nizanakolona N 1.png",
+    year: "2023",
+    image:
+      "",
     status: "local",
-    link: "https://mon-portfolio.vercel.app",
+    link: null,
     downloadLink: null,
     screenshots: [
       {
-        src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1400&q=80",
-        titre: "Accueil",
-        caption: "Page d'accueil du studio",
+        src: "/src/assets/books/admin.png",
+        titre: "Liste des livres — Administration",
+        caption: "Interface d'administration permettant de visualiser, modifier, republier/dépublier et gérer la quantité en stock de chaque livre",
         traitement: [
-          "Présentation du studio et de son activité",
-          "Mise en avant des réalisations phares",
-          "Appel à l'action vers la prise de contact",
+          "Gestion du stock en temps réel",
         ],
       },
       {
-        src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&q=80",
-        titre: "Services",
-        caption: "Présentation des services proposés",
+        src: "/src/assets/books/addbook.png",
+        titre: "Ajout de livre",
+        caption: "Formulaire d'ajout d'un nouveau livre au catalogue avec upload d'image de couverture, gestion du prix, du stock et de la description",
         traitement: [
-          "Liste détaillée des services proposés",
-          "Description de chaque prestation",
-          "Bouton de demande de devis",
+          "Formulaire modal",
+          "upload image",
+          "Validation des champs",
+        ],
+      },
+      {
+        src: "/src/assets/books/siteclient.png",
+        titre: "Site Client",
+        caption: "Vitrine publique du catalogue avec recherche, filtres par type, ajout au panier et formulaire de contact.",
+        traitement: [
+          "Hero avec présentation",
+          "Catalogue filtrage",
+          "Panier",
+          "Formulaire de contact",
         ],
       },
     ],
   },
   {
     number: "05",
-    title: "Blog Platform",
-    slug: "blog-platform",
-    tagline: "CMS de blog personnalisé",
-    categorie: "CMS & Édition de contenu",
+    title: "StageConnect",
+    slug: "stageconnect",
+    tagline: "Trouvez et gérez vos recherches de stage en un seul endroit",
+    categorie: "Plateforme web",
     description:
-      "Système de gestion de contenu avec éditeur riche, catégories et système de commentaires.",
-    role: "Développement backend & frontend",
-    client: "Projet personnel",
-    type: "web",
-    tools: [
-      { icon: SiPython, label: "Python", color: "#3776AB" },
-      { icon: SiDjango, label: "Django", color: "#092E20" },
-    ],
-    year: "2023",
-    image:
-      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&q=80",
-    status: "local",
-    link: null,
-    downloadLink: null,
-    screenshots: [
-      {
-        src: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1400&q=80",
-        titre: "Éditeur d'articles",
-        caption: "Éditeur d'articles avec mise en forme riche",
-        traitement: [
-          "Éditeur de texte riche (gras, titres, images, liens)",
-          "Sauvegarde automatique en brouillon",
-          "Publication immédiate ou programmée",
-        ],
-      },
-      {
-        src: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=1400&q=80",
-        titre: "Liste des articles",
-        caption: "Liste des articles par catégorie",
-        traitement: [
-          "Filtrage des articles par catégorie",
-          "Recherche par mot-clé",
-          "Système de commentaires par article",
-        ],
-      },
-    ],
-  },
-  {
-    number: "06",
-    title: "Social Dashboard",
-    slug: "social-dashboard",
-    tagline: "Analytics réseaux sociaux",
-    categorie: "Analytics & Data Visualisation",
-    description:
-      "Tableau de bord d'analytics avec visualisation de données et rapports exportables.",
+      "Application web permettant aux étudiants de rechercher, suivre et gérer leurs candidatures de stage. Le parcours d'inscription intègre une authentification OAuth multi-étapes avec upload de photo de profil, validation du numéro de téléphone par opérateur, et un système de connexion sécurisé avec vérification d'email et code à 6 chiffres auto-soumis",
     role: "Développement frontend & intégration data",
     client: "Projet personnel",
     type: "web",
     tools: [
-      { icon: SiAngular, label: "Angular", color: "#DD0031" },
-      { icon: SiMongodb, label: "MongoDB", color: "#47A248" },
+      { icon: SiReact, label: "React", color: "#DD0031" },
+      { icon: SiVite, label: "vite", color: "#47A248" },
+      { icon: SiGsap, label: "gsap", color: "#47A248" },
+      { icon: SiNodebb, label: "node", color: "#47A248" },
+      { icon: SiExpressdotcom, label: "express", color: "#47A248" },
+      { icon: SiPostgresql, label: "postgresql", color: "#47A248" },
+      { icon: SiTailwindcss, label: "tailwindcss", color: "#47A248" },
     ],
-    year: "2023",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    status: "local",
-    link: null,
-    downloadLink: null,
-    screenshots: [
-      {
-        src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1400&q=80",
-        titre: "Vue d'ensemble",
-        caption: "Vue d'ensemble des statistiques par réseau social",
-        traitement: [
-          "Agrégation des statistiques de plusieurs réseaux sociaux",
-          "Graphiques d'évolution (followers, engagement)",
-          "Comparaison des performances entre réseaux",
-        ],
-      },
-      {
-        src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&q=80",
-        titre: "Export de rapports",
-        caption: "Export de rapports personnalisés",
-        traitement: [
-          "Génération de rapports personnalisés par période",
-          "Export au format PDF et CSV",
-          "Sélection des indicateurs à inclure",
-        ],
-      },
-    ],
-  },
-  {
-    number: "07",
-    title: "Booking System",
-    slug: "booking-system",
-    tagline: "Réservation de salles en ligne",
-    categorie: "Réservation & Planification",
-    description:
-      "Application de réservation avec calendrier interactif et confirmations automatiques par email.",
-    role: "Développement full-stack",
-    client: "Projet personnel",
-    type: "web",
-    tools: [
-      { icon: SiSvelte, label: "Svelte", color: "#FF3E00" },
-      { icon: SiPostgresql, label: "PostgreSQL", color: "#4169E1" },
-    ],
-    year: "2024",
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
-    status: "deployed",
-    link: "https://mon-booking-system.vercel.app",
-    downloadLink: null,
-    screenshots: [
-      {
-        src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1400&q=80",
-        titre: "Calendrier de réservation",
-        caption: "Calendrier interactif de réservation de salles",
-        traitement: [
-          "Sélection d'une salle et d'un créneau via calendrier",
-          "Vérification automatique des disponibilités",
-          "Blocage du créneau une fois réservé",
-        ],
-      },
-      {
-        src: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=1400&q=80",
-        titre: "Confirmation",
-        caption: "Confirmation automatique par email",
-        traitement: [
-          "Envoi automatique d'un email de confirmation",
-          "Rappel automatique avant le rendez-vous",
-          "Annulation possible depuis le lien reçu par email",
-        ],
-      },
-    ],
-  },
-  {
-    number: "08",
-    title: "App de gestion de stock",
-    slug: "gestion-stock",
-    tagline: "En cours de développement",
-    categorie: "Gestion d'inventaire",
-    description:
-      "Application de gestion d'inventaire avec suivi en temps réel et alertes de rupture.",
-    role: "Développement full-stack",
-    client: "Projet personnel",
-    type: "desktop",
-    tools: [
-      { icon: SiReact, label: "React", color: "#61DAFB" },
-      { icon: SiNodedotjs, label: "Node.js", color: "#339933" },
-    ],
-    year: "2025",
+    year: "2026",
     image: null,
     inProgress: true,
     status: "local",
@@ -436,4 +334,5 @@ export const projects = [
     downloadLink: null,
     screenshots: [],
   },
+ 
 ];
