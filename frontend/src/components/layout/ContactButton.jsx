@@ -20,7 +20,7 @@ const contactOptions = [
   },
   {
     label: "Email",
-    href: "mailto:christiannomenjanahary4@gmail.com",
+    href: "mailto:christian20.cmd@gmail.com",
     icon: SiGmail,
     color: "#EA4335",
   },
