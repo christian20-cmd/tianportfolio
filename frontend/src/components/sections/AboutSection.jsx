@@ -109,9 +109,9 @@ function AboutSection() {
             <a
               href="/cv.pdf"
               download
-              className="inline-flex items-center gap-2 justify-center w-full sm:w-auto sm:max-w-48 my-8 rounded-full bg-white text-gray-900 text-sm font-medium px-5 py-2 hover:bg-gray-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
+              className="inline-flex items-center gap-2 justify-center w-full sm:w-auto sm:max-w-72 my-8 rounded-full bg-white text-gray-900 text-sm font-medium px-5 py-2 hover:bg-gray-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
             >
-              Télecharger CV <DownloadIcon size={17} />
+              Téléchargez mon CV <DownloadIcon size={17} />
             </a>
           </div>
         </div>

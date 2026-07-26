@@ -11,7 +11,7 @@ export default function Projets({ onProjectClick }) {
 
   return (
     <section id="projets" ref={sectionRef} className="relative w-full bg-[#EDEEF1] py-16">
-      <div className="reveal items-center text-center justify-center flex flex-col w-full pb-8 px-4">
+      <div className="reveal  items-center text-center justify-center flex flex-col w-full pt-16 md:pt-20 pb-8 px-4">
         <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 w-full max-w-xl">
           <div className="bar-anim section-bar bg-green-600"></div>
           <span className="section-title text-gray-400">Mes Projets</span>

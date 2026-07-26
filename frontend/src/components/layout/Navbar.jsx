@@ -116,7 +116,7 @@ export default function Navbar() {
             scrolled ? "text-[11px] px-4 py-1.5" : "text-xs px-5 py-2"
           }`}
         >
-          Télécharger CV
+          Téléchargez mon CV
         </a>
       </div>
     </nav>

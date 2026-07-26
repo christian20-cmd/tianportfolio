@@ -116,7 +116,7 @@ export default function ContactButton() {
   }, [isOpen]);
 
   return (
-    <div ref={wrapRef} className="fixed bottom-8 right-12 z-50 w-14 h-14">
+    <div ref={wrapRef} className="fixed bottom-8 right-10 z-50 w-14 h-14">
       {contactOptions.map(({ label, href, icon: Icon, color }, i) => (
         <a
           key={label}
