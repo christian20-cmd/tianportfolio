@@ -32,12 +32,11 @@ export default function ProjectCard({ project, onClick }) {
   };
   const currentType = typeConfig[type];
 
-  // ═══ Détermine l'action au clic selon statut + type ═══
   const isDeployed = status === "deployed";
   const isWeb = type === "web";
   const isDownloadable = type === "desktop" || type === "mobile";
 
-  let actionMode = "showcase"; // par défaut : ouvre ProjectShowcase (projet local)
+  let actionMode = "showcase";
   if (isDeployed && isWeb && link) actionMode = "link";
   if (isDeployed && isDownloadable && downloadLink) actionMode = "download";
 
@@ -68,7 +67,6 @@ export default function ProjectCard({ project, onClick }) {
       onKeyDown={(e) => e.key === "Enter" && handleAction()}
       className="relative w-full max-w-[320px] mx-auto aspect-[12/12] rounded-[24px] border-[5px] border-black bg-black/20 overflow-hidden shadow-lg group cursor-pointer"
     >
-      {/* Image de fond (pleine card) ou fallback si pas d'image */}
       <div className="absolute inset-0">
         {image ? (
           <img
@@ -85,20 +83,18 @@ export default function ProjectCard({ project, onClick }) {
         )}
       </div>
 
-      {/* Badge type (mobile/desktop/web), en haut à droite */}
       {currentType && (
         <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-white border-2 border-black/60 rounded-full px-2 py-2">
           <currentType.icon className="w-3.5 h-3.5 text-black shrink-0" />
         </div>
       )}
-      {/* Icône d'action (lien externe / téléchargement), en haut à droite au-dessus du badge type */}
+
       {ActionIcon && (
         <div className="absolute top-16 right-4 z-20 flex h-8 w-8 items-center justify-center bg-white border-2 border-black/60 rounded-full">
           <ActionIcon className="w-3.5 h-3.5 text-black" />
         </div>
       )}
 
-      {/* Tampon "En cours de développement", façon cachet encreur */}
       {inProgress && (
         <div className="absolute top-16 right-16 z-30 -rotate-12">
           <div className="border-[3px] border-red-600/90 rounded-md px-2.5 py-1 relative">
@@ -110,7 +106,6 @@ export default function ProjectCard({ project, onClick }) {
         </div>
       )}
 
-      {/* Badges des outils utilisés, en haut à gauche, autant que nécessaire */}
       {tools?.length > 0 && (
         <div className="absolute top-4 left-4 right-20 z-20 flex flex-row flex-wrap gap-1.5">
           {tools.map((tool) => (
@@ -124,8 +119,6 @@ export default function ProjectCard({ project, onClick }) {
         </div>
       )}
 
-      {/* --- Silhouette du volet en 2 blocs superposés --- */}
-      
       <div className="absolute left-0 right-0 bottom-0 top-[47%] bg-black/90 rounded-t-[22px] z-10" />
 
       <div className="absolute left-0 top-[46%] right-0 bottom-0 z-20 px-4 pt-3 flex flex-col">
@@ -133,7 +126,7 @@ export default function ProjectCard({ project, onClick }) {
           <h3 className="text-green-600 font-poppins text-sm leading-tight">
             {title}
           </h3>
-          
+
           {currentStatus && (
             <div className="flex items-center gap-1.5 shrink-0 bg-white px-2.5 py-0.5 rounded-full font-bold">
               <span className="relative flex h-1.5 w-1.5">
@@ -148,8 +141,7 @@ export default function ProjectCard({ project, onClick }) {
             </div>
           )}
         </div>
-        
-        {/* Rôle, discret sous le titre */}
+
         {role && (
           <span className="text-gray-400 text-[10px] font-poppins">{role}</span>
         )}
@@ -164,7 +156,6 @@ export default function ProjectCard({ project, onClick }) {
           </p>
         )}
 
-        {/* Numéro en bas, rempli avec l'image du projet */}
         <div className="mt-auto flex items-end justify-between pb-4">
           <div className="flex items-baseline gap-1.5">
             <span

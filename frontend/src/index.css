@@ -37,3 +37,66 @@ html, body, #root {
   -ms-overflow-style: none; /* IE et Edge */
   scrollbar-width: none;    /* Firefox */
 }
+/* --- Reveal générique (déjà ajouté pour Projets) --- */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+.bar-anim {
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+}
+.reveal.in-view .bar-anim {
+  transform: scaleX(1);
+}
+
+/* --- Variante fade simple, sans translation (logos, icônes) --- */
+.reveal-fade {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.reveal-fade.in-view {
+  opacity: 1;
+}
+
+/* --- Variante scale (image hero, logo footer) --- */
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal-scale.in-view {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --- Titre de section : IDENTIQUE partout (Projets / About / Contact) --- */
+.section-title {
+  font-family: "Baloo 2", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: 0.75rem; /* text-xs */
+  flex-shrink: 0;
+}
+@media (min-width: 640px) {
+  .section-title {
+    font-size: 0.875rem; /* sm:text-sm, identique partout */
+  }
+}
+.section-bar {
+  height: 0.625rem;
+  flex: 1 1 0%;
+  max-width: 4rem;
+}
+@media (min-width: 640px) {
+  .section-bar {
+    height: 0.75rem;
+    max-width: 10rem;
+  }
+}

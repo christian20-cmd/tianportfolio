@@ -1,8 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-
-gsap.registerPlugin(ScrollToPlugin);
 
 const links = [
   { label: "Accueil", href: "#accueil", id: "accueil" },
@@ -14,12 +10,10 @@ const links = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("accueil");
+  const [mounted, setMounted] = useState(false);
   const navRef = useRef(null);
-  const logoRef = useRef(null);
-  const linksRef = useRef(null);
-  const cvBtnRef = useRef(null);
 
-  // ═══ Effet "pill" quand on scroll (sans masquage) ═══
+  // ═══ Effet "pill" quand on scroll ═══
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -55,57 +49,24 @@ export default function Navbar() {
     return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
-  // ═══ Animation d'entrée au chargement ═══
+  // ═══ Animation d'entrée simple au chargement (CSS, sans GSAP) ═══
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.set([logoRef.current, cvBtnRef.current], { opacity: 0, y: -20 });
-      gsap.set(navRef.current, { opacity: 0, y: -30 });
-
-      const tl = gsap.timeline({ delay: 0.2 });
-
-      tl.to(navRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power3.out",
-      })
-        .to(
-          logoRef.current,
-          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
-          "-=0.4"
-        )
-        .fromTo(
-          linksRef.current?.children || [],
-          { opacity: 0, y: -12 },
-          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out", stagger: 0.08 },
-          "-=0.3"
-        )
-        .to(
-          cvBtnRef.current,
-          { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" },
-          "-=0.3"
-        );
-    }, navRef);
-
-    return () => ctx.revert();
+    const id = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(id);
   }, []);
 
-  // Fonction de scroll animé via GSAP
+  // Scroll fluide natif, sans GSAP
   const handleNavClick = (e, id) => {
     e.preventDefault();
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: { y: "#" + id, offsetY: 100 },
-      ease: "power2.inOut",
-    });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 w-full z-50 font-poppins transition-all duration-300 ${
+      className={`fixed top-0 left-0 w-full z-50 font-poppins transition-all duration-500 ${
         scrolled ? "mt-3" : "mt-0"
-      }`}
+      } ${mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"}`}
     >
       <div
         className={`mx-auto flex items-center justify-between transition-all duration-300 ${
@@ -115,7 +76,6 @@ export default function Navbar() {
         }`}
       >
         <a
-          ref={logoRef}
           href="#accueil"
           onClick={(e) => handleNavClick(e, "accueil")}
           className={`font-bold font-baloo text-green-600 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 transition-all duration-300 ${
@@ -126,7 +86,6 @@ export default function Navbar() {
         </a>
 
         <ul
-          ref={linksRef}
           className={`hidden md:flex items-center font-bold text-gray-400 transition-all duration-300 ${
             scrolled ? "gap-5 text-xs" : "gap-8 text-sm"
           }`}
@@ -151,7 +110,6 @@ export default function Navbar() {
         </ul>
 
         <a
-          ref={cvBtnRef}
           href="/cv.pdf"
           download
           className={`inline-flex items-center gap-2 rounded-full bg-black text-white font-medium hover:bg-gray-700 transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 ${
