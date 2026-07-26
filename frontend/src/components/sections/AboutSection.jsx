@@ -6,6 +6,7 @@ import { SplitText } from 'gsap/SplitText'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin'
 import { DownloadIcon } from 'lucide-react'
+import profil from '../../assets/heroimage.png'
 
 import {
   SiReact,
@@ -182,7 +183,7 @@ function AboutSection() {
         <motion.div variants={item} className="relative z-0 w-full">
           <div className="relative overflow-hidden bg-black h-80 md:h-[420px] lg:h-full">
             <img
-              src="src/assets/heroimage.png"
+              src={profil}
               alt="Christian Nomenjanahary"
               className="w-full h-full object-contain lg:object-cover object-center lg:object-[center_15%]"
             />

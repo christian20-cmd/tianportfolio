@@ -2,7 +2,6 @@
 import {
   SiReact,
   SiNodedotjs,
-
   SiPostgresql,
   SiTailwindcss,
   SiDotnet,
@@ -16,6 +15,35 @@ import {
   SiNodebb,
   SiExpressdotcom,
 } from "react-icons/si";
+
+// --- Images GoodEyes ---
+import goodeyesLogo from "../assets/goodeyes/logoW.png";
+import goodeyesLogin from "../assets/goodeyes/login.png";
+import goodeyesDashboard from "../assets/goodeyes/dashboard.png";
+import goodeyesTraficReseau from "../assets/goodeyes/trafic_reseau.png";
+import goodeyesAlerte from "../assets/goodeyes/alerte.png";
+import goodeyesIpBloque from "../assets/goodeyes/ipbloque.png";
+import goodeyesRapport from "../assets/goodeyes/rapport.png";
+
+// --- Images 3A ---
+import troisALogo from "../assets/3A/3ALogo.png";
+import troisALogin from "../assets/3A/login.jpeg";
+import troisADashboardClient from "../assets/3A/dashboardclient.jpeg";
+import troisAListAvocatDispo from "../assets/3A/ListavocatDispo.jpeg";
+import troisARdvAvocat from "../assets/3A/rdvavocat.jpeg";
+import troisADashboardAvocat from "../assets/3A/dashboardavocat.jpeg";
+import troisADisponibilitePageAvocat from "../assets/3A/disponibilitepageavocat.jpeg";
+
+// --- Images N Studio ---
+import nstudioLogo from "../assets/Nstudios/LogoNstudio.png";
+import nstudioAccueil from "../assets/Nstudios/accueil.png";
+import nstudioNstudio from "../assets/Nstudios/Nstudio.png";
+import nstudioApropos from "../assets/Nstudios/Apropos.png";
+
+// --- Images Books ---
+import booksAdmin from "../assets/books/admin.png";
+import booksAddbook from "../assets/books/addbook.png";
+import booksSiteclient from "../assets/books/siteclient.png";
 
 export const projects = [
   {
@@ -36,12 +64,12 @@ export const projects = [
       { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
     ],
     year: "2026",
-    image: "src/assets/goodeyes/logoW.png",
+    image: goodeyesLogo,
     status: "local",
     downloadLink: null,
     screenshots: [
       {
-        src: "src/assets/goodeyes/login.png",
+        src: goodeyesLogin,
         titre: "Connexion",
         caption: "Authentification sécurisée de l'administrateur",
         traitement: [
@@ -52,7 +80,7 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/goodeyes/dashboard.png",
+        src: goodeyesDashboard,
         titre: "Tableau de bord",
         caption: "Vue temps réel du trafic réseau",
         traitement: [
@@ -63,7 +91,7 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/goodeyes/trafic_reseau.png",
+        src: goodeyesTraficReseau,
         titre: "Trafic réseau",
         caption: "Analyse détaillée du trafic entrant et sortant",
         traitement: [
@@ -74,7 +102,7 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/goodeyes/alerte.png",
+        src: goodeyesAlerte,
         titre: "Alertes",
         caption: "Système d'alertes automatiques sur intrusions détectées",
         traitement: [
@@ -84,9 +112,8 @@ export const projects = [
           "Marquage des alertes comme traitées / ignorées",
         ],
       },
-
       {
-        src: "src/assets/goodeyes/ipbloque.png",
+        src: goodeyesIpBloque,
         titre: "IP bloquées",
         caption: "Gestion des adresses IP bloquées automatiquement ou manuellement",
         traitement: [
@@ -97,7 +124,7 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/goodeyes/rapport.png",
+        src: goodeyesRapport,
         titre: "Rapport",
         caption: "Rapport d'analyse exportable des anomalies",
         traitement: [
@@ -107,7 +134,6 @@ export const projects = [
           "Visualisation graphique des tendances",
         ],
       },
-      
     ],
   },
   {
@@ -128,20 +154,18 @@ export const projects = [
       { icon: SiExpress, label: "Express.js", color: "#000" },
     ],
     year: "2026",
-    image: "src/assets/3A/3ALogo.png",
+    image: troisALogo,
     status: "local",
     downloadLink: null,
     screenshots: [
       {
-        src: "src/assets/3A/login.jpeg",
+        src: troisALogin,
         titre: "Connexion",
         caption: "Accueil — recherche d'avocat par spécialité",
-        traitement: [
-          "Connexion client ou avocat via un compte unique",
-        ],
+        traitement: ["Connexion client ou avocat via un compte unique"],
       },
       {
-        src: "src/assets/3A/dashboardclient.jpeg",
+        src: troisADashboardClient,
         titre: "Tableau de bord client",
         caption: "Suivi des rendez-vous pris par le client",
         traitement: [
@@ -151,18 +175,16 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/3A/ListavocatDispo.jpeg",
+        src: troisAListAvocatDispo,
         titre: "Liste des avocats disponibles",
         caption: "Résultats de recherche filtrés par disponibilité",
         traitement: [
           "Liste des avocats disponibles selon les critères de recherche",
-         
           "Accès direct à la prise de rendez-vous",
         ],
       },
-
       {
-        src: "src/assets/3A/rdvavocat.jpeg",
+        src: troisARdvAvocat,
         titre: "Prise de rendez-vous",
         caption: "Prise de rendez-vous avec calendrier interactif",
         traitement: [
@@ -173,7 +195,7 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/3A/dashboardavocat.jpeg",
+        src: troisADashboardAvocat,
         titre: "Tableau de bord avocat",
         caption: "Vue d'ensemble des rendez-vous de l'avocat",
         traitement: [
@@ -183,7 +205,7 @@ export const projects = [
         ],
       },
       {
-        src: "src/assets/3A/disponibilitepageavocat.jpeg",
+        src: troisADisponibilitePageAvocat,
         titre: "Disponibilités avocat",
         caption: "Gestion des créneaux disponibles par l'avocat",
         traitement: [
@@ -192,12 +214,8 @@ export const projects = [
           "Blocage automatique des créneaux déjà réservés",
         ],
       },
-      
-      
-      
     ],
   },
-  
   {
     number: "03",
     title: "N Studio",
@@ -214,39 +232,31 @@ export const projects = [
       { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
     ],
     year: "2025",
-    image: "src/assets/Nstudios/LogoNstudio.png",
+    image: nstudioLogo,
     status: "local",
     downloadLink: null,
     screenshots: [
       {
-        src: "/src/assets/Nstudios/accueil.png",
+        src: nstudioAccueil,
         titre: "Accueil",
         caption: "Page d'accueil avec présentation du studio, section vidéo et FAQ.",
-        traitement: [
-          "Hero avec vidéo de fond",
-          "Section présentation",
-          
-        ],
+        traitement: ["Hero avec vidéo de fond", "Section présentation"],
       },
       {
-        src: "/src/assets/Nstudios/Nstudio.png",
+        src: nstudioNstudio,
         titre: "N Studio",
         caption: "Galerie photo/vidéo et section audio présentant les réalisations du studio.",
-        traitement: [
-          "Galerie masonry",
-          "Lecteur audio intégré",
-          "FAQ interactive",
-        ],
+        traitement: ["Galerie masonry", "Lecteur audio intégré", "FAQ interactive"],
       },
       {
-        src: "/src/assets/Nstudios/Apropos.png",
+        src: nstudioApropos,
         titre: "A propos",
-        caption: "Présentation détaillée des services : photo, vidéo, confection, conception, impression, avec statistiques et section contact.",
+        caption:
+          "Présentation détaillée des services : photo, vidéo, confection, conception, impression, avec statistiques et section contact.",
         traitement: [
           "Carte Services animées ",
           "Statistiques (+5ans, +20 clients)",
           "Call-to-actions",
-
         ],
       },
     ],
@@ -269,34 +279,30 @@ export const projects = [
       { icon: SiCss, label: "css", color: "#6924CE" },
     ],
     year: "2023",
-    image:
-      "",
+    image: null,
     status: "local",
     link: null,
     downloadLink: null,
     screenshots: [
       {
-        src: "/src/assets/books/admin.png",
+        src: booksAdmin,
         titre: "Liste des livres — Administration",
-        caption: "Interface d'administration permettant de visualiser, modifier, republier/dépublier et gérer la quantité en stock de chaque livre",
-        traitement: [
-          "Gestion du stock en temps réel",
-        ],
+        caption:
+          "Interface d'administration permettant de visualiser, modifier, republier/dépublier et gérer la quantité en stock de chaque livre",
+        traitement: ["Gestion du stock en temps réel"],
       },
       {
-        src: "/src/assets/books/addbook.png",
+        src: booksAddbook,
         titre: "Ajout de livre",
-        caption: "Formulaire d'ajout d'un nouveau livre au catalogue avec upload d'image de couverture, gestion du prix, du stock et de la description",
-        traitement: [
-          "Formulaire modal",
-          "upload image",
-          "Validation des champs",
-        ],
+        caption:
+          "Formulaire d'ajout d'un nouveau livre au catalogue avec upload d'image de couverture, gestion du prix, du stock et de la description",
+        traitement: ["Formulaire modal", "upload image", "Validation des champs"],
       },
       {
-        src: "/src/assets/books/siteclient.png",
+        src: booksSiteclient,
         titre: "Site Client",
-        caption: "Vitrine publique du catalogue avec recherche, filtres par type, ajout au panier et formulaire de contact.",
+        caption:
+          "Vitrine publique du catalogue avec recherche, filtres par type, ajout au panier et formulaire de contact.",
         traitement: [
           "Hero avec présentation",
           "Catalogue filtrage",
@@ -334,5 +340,4 @@ export const projects = [
     downloadLink: null,
     screenshots: [],
   },
- 
 ];
