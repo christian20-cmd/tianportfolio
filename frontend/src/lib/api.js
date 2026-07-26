@@ -1,7 +1,6 @@
 // src/lib/api.js
-
-const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
-const SERVER_ORIGIN = import.meta.env.VITE_API_URL;
+const API_BASE_URL = 'http://localhost:4000/api';
+const SERVER_ORIGIN = API_BASE_URL.replace(/\/api\/?$/, '');
 
 export function getImageUrl(url) {
   if (!url) return '';
