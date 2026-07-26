@@ -12,8 +12,6 @@ import {
   SiCss,
   SiVite,
   SiGsap,
-  SiNodebb,
-  SiExpressdotcom,
 } from "react-icons/si";
 
 // --- Images GoodEyes ---
@@ -324,13 +322,14 @@ export const projects = [
     client: "Projet personnel",
     type: "web",
     tools: [
-      { icon: SiReact, label: "React", color: "#DD0031" },
-      { icon: SiVite, label: "vite", color: "#47A248" },
+      { icon: SiReact, label: "ReactNative", color: "#61DAFB" },
+      { icon: SiTailwindcss, label: "Tailwind", color: "#06B6D4" },
+      { icon: SiVite, label: "vite", color: "#9C4AF8" },
       { icon: SiGsap, label: "gsap", color: "#47A248" },
-      { icon: SiNodebb, label: "node", color: "#47A248" },
-      { icon: SiExpressdotcom, label: "express", color: "#47A248" },
-      { icon: SiPostgresql, label: "postgresql", color: "#47A248" },
-      { icon: SiTailwindcss, label: "tailwindcss", color: "#47A248" },
+      { icon: SiNodedotjs, label: "Node.js", color: "#339933" },
+      { icon: SiExpress, label: "Express.js", color: "#000" },
+      { icon: SiPostgresql, label: "Postgresql", color: "#4169E1" },
+
     ],
     year: "2026",
     image: null,

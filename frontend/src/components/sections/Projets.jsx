@@ -44,7 +44,7 @@ export default function Projets({ onProjectClick }) {
         .to(barRightRef.current, { scaleX: 1, duration: 0.7, ease: "power3.out" }, "<")
         .to(
           titleSplit.chars,
-          { x: 0, opacity: 1, duration: 0.7, ease: "power4", stagger: 0.04 },
+          { x: 0, opacity: 1, duration: 0.4, ease: "power4", stagger: 0.02 },
           "<"
         )
         .to(

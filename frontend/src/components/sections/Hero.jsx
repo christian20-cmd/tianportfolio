@@ -51,8 +51,8 @@ function Hero() {
       tl.from(accentsRef.current, {
         opacity: 0,
         y: 30,
-        duration: 0.6,
-        stagger: 0.08,
+        duration: 0.2,
+        stagger: 0.04,
       })
         .from(nameRef.current, { opacity: 0, y: 40, duration: 0.8 }, '-=0.4')
         .from(badgeRef.current, { opacity: 0, y: 20, duration: 0.5 }, '-=0.5')
@@ -62,7 +62,7 @@ function Hero() {
           {
             x: 150,
             opacity: 0,
-            duration: 0.7,
+            duration: 0.4,
             ease: 'power4',
             stagger: 0.04,
           },
@@ -133,7 +133,7 @@ function Hero() {
 
               <h1
                 ref={titleRef}
-                className="text-4xl lg:text-5xl font-borel font-bold text-black leading-tight opacity-0"
+                className="text-3xl lg:text-5xl font-borel font-bold text-black leading-tight opacity-0"
               >
                 Développeur.
               </h1>
