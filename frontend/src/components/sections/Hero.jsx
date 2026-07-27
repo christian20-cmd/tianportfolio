@@ -3,7 +3,7 @@ import { Eye } from "lucide-react";
 import heroimage from "../../assets/heroimage.png";
 
 const skills = [
-  { label: "ReactJs & Vite", top: "23%", side: "right", offset: "10%" },
+  { label: "ReactJs & Vite", top: "23%", side: "right", offset: "1%" },
   { label: "Gsap", top: "47%", side: "left", offset: "-7%" },
   { label: "Tailwind CSS", top: "70%", side: "left", offset: "-20%" },
   { label: "Framer Motion", top: "72%", side: "right", offset: "-17%" },
@@ -88,7 +88,7 @@ function Hero() {
                 <div
                   key={skill.label}
                   style={{ transitionDelay: `${i * 100}ms`, top: skill.top, [skill.side]: skill.offset }}
-                  className={`reveal hidden lg:flex items-center gap-2 absolute z-20 ${
+                  className={`reveal hidden xl:flex items-center gap-2 absolute z-20 ${
                     skill.side === "left" ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
