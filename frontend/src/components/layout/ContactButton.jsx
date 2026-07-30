@@ -14,7 +14,7 @@ const contactOptions = [
   },
   {
     label: "Téléphone",
-    href: "tel:+26134527118",
+    href: "tel:+261345271718",
     icon: Phone,
     color: "#ffffff",
   },

@@ -1,6 +1,6 @@
 import { useReveal } from "../../hooks/useReveal";
 import { DownloadIcon } from "lucide-react";
-import profil from "../../assets/heroimage.png";
+import profil from "../../assets/imagecontact.png";
 
 import {
   SiReact,
@@ -61,7 +61,7 @@ function AboutSection() {
                 alt="Christian Nomenjanahary"
                 className="w-full h-full object-contain lg:object-cover object-center lg:object-[center_15%]"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
+              
             </div>
           </div>
 
