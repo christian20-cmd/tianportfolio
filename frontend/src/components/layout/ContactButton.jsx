@@ -4,17 +4,18 @@ import { gsap } from "gsap";
 import { Link as LinkIcon, X } from "lucide-react";
 import { SiGithub, SiGmail, SiWhatsapp } from "react-icons/si";
 import { Phone } from "lucide-react";
+import FillButton from "./Fillbutton";
 
 const contactOptions = [
   {
     label: "WhatsApp",
-    href: "https://wa.me/26134527118",
+    href: "https://wa.me/261345271718",
     icon: SiWhatsapp,
     color: "#25D366",
   },
   {
     label: "Téléphone",
-    href: "tel:+261345271718",
+    href: "tel:+261349590608",
     icon: Phone,
     color: "#ffffff",
   },
@@ -118,31 +119,45 @@ export default function ContactButton() {
   return (
     <div ref={wrapRef} className="fixed bottom-8 right-10 z-50 w-14 h-14">
       {contactOptions.map(({ label, href, icon: Icon, color }, i) => (
-        <a
+        <div
           key={label}
           ref={(el) => (itemsRef.current[i] = el)}
-          href={href}
-          target={href.startsWith("http") ? "_blank" : undefined}
-          rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-          aria-label={label}
-          title={label}
-          className="absolute bottom-0 right-0 flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-[#1c1c1e] text-white/80 shadow-lg hover:text-white hover:border-white/30 transition-colors z-10"
-          style={{ color }}
+          className="absolute bottom-0 right-0 h-10 w-10 z-10"
         >
-          <Icon size={18} />
-        </a>
+          <FillButton
+            as="a"
+            href={href}
+            target={href.startsWith("http") ? "_blank" : undefined}
+            rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+            aria-label={label}
+            title={label}
+            fillColor="#ffffff"
+            hoverTextColor="#000000"
+            className="h-full w-full items-center justify-center rounded-full border border-white/10 bg-[#1c1c1e]"
+            style={{ color }}
+          >
+            <Icon size={18} />
+          </FillButton>
+        </div>
       ))}
 
-      <button
-        id="fabBtn"
-        onClick={toggle}
-        aria-expanded={isOpen}
-        aria-label={isOpen ? "Fermer le contact" : "Ouvrir le contact"}
-        className="absolute bottom-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-green-500 text-white shadow-xl hover:bg-green-800 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 z-20"
-      >
-        <LinkIcon ref={linkIconRef} className="absolute" size={24} />
-        <X ref={xIconRef} className="absolute" size={24} />
-      </button>
+      <div className="absolute bottom-0 right-0 h-12 w-12 z-20">
+        <FillButton
+          as="button"
+          id="fabBtn"
+          onClick={toggle}
+          aria-expanded={isOpen}
+          aria-label={isOpen ? "Fermer le contact" : "Ouvrir le contact"}
+          fillColor="#15803d"
+          className="h-full w-full items-center justify-center rounded-full bg-green-500 text-white shadow-xl outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+          overlay={
+            <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <LinkIcon ref={linkIconRef} className="absolute" size={24} />
+              <X ref={xIconRef} className="absolute" size={24} />
+            </span>
+          }
+        />
+      </div>
     </div>
   );
 }

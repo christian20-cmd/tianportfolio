@@ -1,5 +1,5 @@
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
-
+import logo from "../../assets/logo.png";
 const links = [
   { label: "Accueil", href: "#accueil" },
   { label: "À propos", href: "#a-propos" },
@@ -16,11 +16,10 @@ export default function Footer() {
       <div className="relative z-10 mx-auto flex flex-col sm:flex-row justify-between items-center gap-6 sm:gap-4 text-center sm:text-left">
         <a
           href="#accueil"
-          className="reveal order-1 text-2xl sm:text-3xl font-bold font-baloo text-green-600 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+          className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 h-14 w-14"
         >
-          {"</"} <span className="text-white/15">tian</span>
-          {">"}
-        </a>
+          <img src={logo} alt="Logo" className="w-full h-full object-contain" />
+        </a>  
 
         <nav className="order-3 sm:order-2 flex flex-row flex-wrap items-center justify-center font-baloo gap-x-4 gap-y-2 sm:gap-6">
           {links.map((link, i) => (

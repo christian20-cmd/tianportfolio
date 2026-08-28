@@ -294,21 +294,22 @@ function AboutSection() {
       id="a-propos"
       className="relative min-h-screen w-full overflow-hidden bg-[#EDE9E4] font-poppins py-24"
     >
-      
-
+      <div className="reveal items-center text-center justify-center flex flex-col w-full pb-8 px-4">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 w-full max-w-xl">
+            <div className="bar-anim section-bar bg-green-600"></div>
+            <span className=" text-2xl font-bold text-black">À propos de moi</span>
+            <div className="bar-anim section-bar bg-green-600"></div>
+          </div>
+          
+        </div>
       <div className="relative z-20 mx-auto flex min-h-[calc(100vh-88px)]  max-w-[1400px] flex-col lg:flex-row lg:items-center">
         {/* Colonne texte gauche */}
         <div className="flex w-full flex-col justify-center px-6 pt-6 sm:px-10 lg:w-[62%] lg:px-16">
-          <div className="reveal mb-8 flex items-center">
-            <ChevronsRight size={30} className="text-green-600" strokeWidth={4} />
-            <ChevronsRight size={30} className="text-green-600" strokeWidth={4} />
-            <span className="font-poppins ml-4 text-lg font-bold uppercase tracking-[0.25em] text-black/50">
-              À propos de moi
-            </span>
-          </div>
+          <p className="text-lg mb-4">Créateur digital — Imaginer. <br /> Développer. <br /> Innover.</p>
           <h2 className="reveal font-poppins text-[clamp(1.8rem,4.5vw,3.6rem)] font-extrabold leading-[0.95] tracking-tight text-black">
             Là où l'innovation rencontre un code pensé avec soin.
           </h2>
+          
 
           {/* Mini-cartes avec hover sur pourcentage */}
           <div className="reveal mt-20 flex flex-wrap gap-6">
