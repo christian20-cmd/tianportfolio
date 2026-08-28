@@ -1,7 +1,7 @@
 // components/layout/ContactButton.jsx
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Link as LinkIcon, X, ChevronUp, ChevronDown, MessageCircle } from "lucide-react";
+import { Link as  X, ChevronUp, ChevronDown, MessageCircle } from "lucide-react";
 import { SiGithub, SiGmail, SiWhatsapp } from "react-icons/si";
 import { Phone } from "lucide-react";
 import FillButton from "./Fillbutton";
@@ -15,7 +15,7 @@ const contactOptions = [
   },
   {
     label: "Téléphone",
-    href: "tel:+261345271718",
+    href: "tel:+261349590608",
     icon: Phone,
     color: "#ffffff",
   },
