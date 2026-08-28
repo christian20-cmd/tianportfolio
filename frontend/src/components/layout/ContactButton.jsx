@@ -1,7 +1,7 @@
 // components/layout/ContactButton.jsx
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import { Link as LinkIcon, X, ChevronUp, ChevronDown } from "lucide-react";
+import { Link as LinkIcon, X, ChevronUp, ChevronDown, MessageCircle } from "lucide-react";
 import { SiGithub, SiGmail, SiWhatsapp } from "react-icons/si";
 import { Phone } from "lucide-react";
 import FillButton from "./Fillbutton";
@@ -33,7 +33,6 @@ const contactOptions = [
   },
 ];
 
-const RADIUS = 100;
 const START_ANGLE = 180;
 const END_ANGLE = 270;
 const ANGLE_STEP = (END_ANGLE - START_ANGLE) / (contactOptions.length - 1);
@@ -41,6 +40,9 @@ const ANGLE_STEP = (END_ANGLE - START_ANGLE) / (contactOptions.length - 1);
 export default function ContactButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollTarget, setScrollTarget] = useState("accueil"); // "accueil" | "contact"
+  // Rayon du menu radial : plus petit sur mobile pour ne pas sortir de l'écran
+  const [radius, setRadius] = useState(80);
+
   const itemsRef = useRef([]);
   const linkIconRef = useRef(null);
   const xIconRef = useRef(null);
@@ -48,6 +50,16 @@ export default function ContactButton() {
   const chevronDownRef = useRef(null);
   const tl = useRef(null);
   const wrapRef = useRef(null);
+
+  // Adapte le rayon du menu radial à la largeur de l'écran
+  useEffect(() => {
+    const updateRadius = () => {
+      setRadius(window.innerWidth < 400 ? 70 : window.innerWidth < 640 ? 85 : 100);
+    };
+    updateRadius();
+    window.addEventListener("resize", updateRadius);
+    return () => window.removeEventListener("resize", updateRadius);
+  }, []);
 
   useEffect(() => {
     gsap.set(itemsRef.current, { x: 0, y: 0, scale: 0, opacity: 0 });
@@ -68,11 +80,11 @@ export default function ContactButton() {
       0.1
     );
 
-    // Items radiaux
+    // Items radiaux (recalculés à chaque ouverture via le radius courant)
     itemsRef.current.forEach((item, i) => {
       const angle = (START_ANGLE + ANGLE_STEP * i) * (Math.PI / 180);
-      const tx = Math.cos(angle) * RADIUS;
-      const ty = Math.sin(angle) * RADIUS;
+      const tx = Math.cos(angle) * radius;
+      const ty = Math.sin(angle) * radius;
 
       tl.current.to(
         item,
@@ -87,7 +99,7 @@ export default function ContactButton() {
         i * 0.05
       );
     });
-  }, []);
+  }, [radius]);
 
   // Morph ChevronUp <-> ChevronDown, initialisé une fois
   useEffect(() => {
@@ -155,12 +167,17 @@ export default function ContactButton() {
   }, [isOpen]);
 
   return (
-    <div ref={wrapRef} className="fixed bottom-8 right-10 z-50 w-14 h-14">
+    // bottom-24 sur mobile pour laisser la place à la bottom bar de nav,
+    // bottom-8 dès md où il n'y a plus de bottom bar
+    <div
+      ref={wrapRef}
+      className="fixed bottom-24 right-4 sm:right-6 md:bottom-16 md:right-10 z-50 h-14 w-14"
+    >
       {contactOptions.map(({ label, href, icon: Icon, color }, i) => (
         <div
           key={label}
           ref={(el) => (itemsRef.current[i] = el)}
-          className="absolute bottom-0 right-0 h-10 w-10 z-10"
+          className="absolute bottom-16 right-4 h-10 w-10 z-10"
         >
           <FillButton
             as="a"
@@ -179,8 +196,8 @@ export default function ContactButton() {
         </div>
       ))}
 
-      {/* Bouton chevron haut/bas, au-dessus du FAB principal */}
-      <div className="absolute bottom-0 right-[38rem] h-12 w-12 z-20">
+      {/* Chevron haut/bas : empilé directement au-dessus du FAB principal, plus de right arbitraire */}
+      <div className="absolute bottom-0 right-4 h-12 w-12 z-20">
         <FillButton
           as="button"
           type="button"
@@ -203,7 +220,8 @@ export default function ContactButton() {
         />
       </div>
 
-      <div className="absolute bottom-0 right-0 h-12 w-12 z-20">
+      {/* FAB principal */}
+      <div className="absolute bottom-16 right-4 h-12 w-12 z-20">
         <FillButton
           as="button"
           id="fabBtn"
@@ -214,7 +232,7 @@ export default function ContactButton() {
           className="h-full w-full items-center justify-center rounded-full bg-green-500 text-white shadow-xl outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
           overlay={
             <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <LinkIcon ref={linkIconRef} className="absolute" size={24} />
+              <MessageCircle ref={linkIconRef} className="absolute" size={24} />
               <X ref={xIconRef} className="absolute" size={24} />
             </span>
           }

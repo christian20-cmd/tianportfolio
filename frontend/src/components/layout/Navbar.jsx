@@ -1,7 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import logo from "../../assets/logo.png";
-import { InfoIcon, ChevronDown } from "lucide-react";
+import {
+  InfoIcon,
+  ChevronDown,
+  Home,
+  FolderKanban,
+  Info,
+  MessageCircle,
+  Circle,
+} from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { translations } from "../../i18n/translations";
 
@@ -39,6 +47,23 @@ const languages = [
   { code: "en", label: "English", Flag: FlagGB },
 ];
 
+const navIconMap = {
+  "#accueil": Home,
+  "#home": Home,
+
+  "#apropos": Info,
+  "#about": Info,
+  "#detail": Info,
+  "#details": Info,
+
+  "#projets": FolderKanban,
+  "#projects": FolderKanban,
+  "#services": FolderKanban,
+
+  "#contact": MessageCircle,
+  "#message": MessageCircle,
+};
+
 export default function Navbar() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(() => window.scrollY > 50);
@@ -70,8 +95,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Détecte la section actuellement visible et met à jour le lien actif
-  // (les href sont identiques dans les deux langues, donc pas besoin de dépendre de `lang` ici)
   useEffect(() => {
     const hrefs = translations.fr.nav.map((link) => link.href);
     const sections = hrefs
@@ -97,7 +120,6 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Timeline GSAP : flèche + panneau élastiques, items en cascade
   useEffect(() => {
     gsap.set(ddMenuRef.current, { autoAlpha: 0, yPercent: -30, scale: 0.7 });
     gsap.set(ddArrowRef.current, { rotation: 0 });
@@ -132,7 +154,6 @@ export default function Navbar() {
     }
   };
 
-  // Fermer au clic extérieur
   useEffect(() => {
     const onClickOutside = (e) => {
       if (langOpen && langWrapRef.current && !langWrapRef.current.contains(e.target)) {
@@ -147,92 +168,120 @@ export default function Navbar() {
   const currentLang = languages.find((l) => l.code === lang);
 
   return (
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 font-poppins transition-colors duration-300 ${
-        hidden ? "-translate-y-full" : "translate-y-0"
-      } ${scrolled ? "bg-black" : "bg-transparent"}`}
-    >
-      <div className="mx-auto flex items-center justify-between w-full px-10 md:px-12 lg:px-16">
-        <a
-          href="#accueil"
-          className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 h-14 w-14"
-        >
-          <img src={logo} alt="Logo" className="w-full h-full object-contain" />
-        </a>
+    <>
+      {/* --- Navbar top : logo + (liens desktop uniquement) + langue + info --- */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-50 font-poppins transition-colors duration-300 ${
+          hidden ? "-translate-y-full" : "translate-y-0"
+        } ${scrolled ? "bg-black" : "bg-transparent"}`}
+      >
+        <div className="mx-auto flex items-center justify-between w-full px-10 md:px-12 lg:px-16">
+          <a
+            href="#accueil"
+            className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 h-14 w-14"
+          >
+            <img src={logo} alt="Logo" className="w-full h-full object-contain" />
+          </a>
 
-        <div className="flex items-center gap-6">
-          {t.nav.map((link) => {
-            const isActive = activeSection === link.href;
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                aria-current={isActive ? "page" : undefined}
-                className={`relative text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 rounded-md ${
-                  isActive ? "text-green-400" : "text-white hover:text-gray-200"
-                }`}
-              >
-                {link.label}
-                <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-green-400 transition-all duration-300 ${
-                    isActive ? "w-full" : "w-0"
+          {/* Liens nav : masqués en dessous de md, remplacés par la bottom bar */}
+          <div className="hidden md:flex items-center gap-6">
+            {t.nav.map((link) => {
+              const isActive = activeSection === link.href;
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`relative text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 rounded-md ${
+                    isActive ? "text-green-400" : "text-white hover:text-gray-200"
                   }`}
-                />
-              </a>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center gap-4">
-          {/* Sélecteur de langue avec drapeaux */}
-          <div ref={langWrapRef} className="relative">
-            <button
-              type="button"
-              onClick={toggleLangMenu}
-              aria-haspopup="listbox"
-              aria-expanded={langOpen}
-              aria-label={t.chooseLang}
-              className="flex items-center gap-1.5 text-sm font-medium text-white hover:text-gray-200 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 rounded-md px-1 py-1"
-            >
-              <currentLang.Flag size={18} />
-              <ChevronDown ref={ddArrowRef} size={14} />
-            </button>
-
-            <ul
-              ref={ddMenuRef}
-              role="listbox"
-              className={`absolute right-0 top-full mt-2 w-36 overflow-hidden rounded-xl border border-white/10 bg-black shadow-xl ${
-                langOpen ? "pointer-events-auto" : "pointer-events-none"
-              }`}
-            >
-              {languages.map(({ code, label, Flag }) => (
-                <li key={code} className="lang-item">
-                  <button
-                    type="button"
-                    role="option"
-                    aria-selected={lang === code}
-                    onClick={() => {
-                      setLang(code);
-                      setLangOpen(false);
-                      ddTl.current.timeScale(exitTs).reverse();
-                    }}
-                    className={`flex w-full items-center gap-2 px-3 py-2 text-sm text-left transition-colors ${
-                      lang === code ? "text-green-400" : "text-white hover:bg-white/10"
+                >
+                  {link.label}
+                  <span
+                    className={`absolute -bottom-1 left-0 h-0.5 bg-green-400 transition-all duration-300 ${
+                      isActive ? "w-full" : "w-0"
                     }`}
-                  >
-                    <Flag size={16} />
-                    {label}
-                  </button>
-                </li>
-              ))}
-            </ul>
+                  />
+                </a>
+              );
+            })}
           </div>
 
-          <a href="#contact" className="text-green-400" aria-label={t.infoLabel}>
-            <InfoIcon size={30} />
-          </a>
+          {/* Langue + info : toujours visibles, même en dessous de md */}
+          <div className="flex items-center gap-4">
+            <div ref={langWrapRef} className="relative">
+              <button
+                type="button"
+                onClick={toggleLangMenu}
+                aria-haspopup="listbox"
+                aria-expanded={langOpen}
+                aria-label={t.chooseLang}
+                className="flex items-center gap-1.5 text-sm font-medium text-white hover:text-gray-200 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 rounded-md px-1 py-1"
+              >
+                <currentLang.Flag size={18} />
+                <ChevronDown ref={ddArrowRef} size={14} />
+              </button>
+
+              <ul
+                ref={ddMenuRef}
+                role="listbox"
+                className={`absolute right-0 top-full mt-2 w-36 overflow-hidden rounded-xl border border-white/10 bg-black shadow-xl ${
+                  langOpen ? "pointer-events-auto" : "pointer-events-none"
+                }`}
+              >
+                {languages.map(({ code, label, Flag }) => (
+                  <li key={code} className="lang-item">
+                    <button
+                      type="button"
+                      role="option"
+                      aria-selected={lang === code}
+                      onClick={() => {
+                        setLang(code);
+                        setLangOpen(false);
+                        ddTl.current.timeScale(exitTs).reverse();
+                      }}
+                      className={`flex w-full items-center gap-2 px-3 py-2 text-sm text-left transition-colors ${
+                        lang === code ? "text-green-400" : "text-white hover:bg-white/10"
+                      }`}
+                    >
+                      <Flag size={16} />
+                      {label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <a href="#contact" className="text-green-400" aria-label={t.infoLabel}>
+              <InfoIcon size={30} />
+            </a>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+
+      {/* --- Bottom bar mobile : icônes seules, remplace le menu en dessous de md --- */}
+      <nav
+        className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-black border-t border-white/10 flex items-center justify-around py-2"
+        style={{ paddingBottom: "max(0.5rem, env(safe-area-inset-bottom))" }}
+      >
+        {t.nav.map((link) => {
+          const isActive = activeSection === link.href;
+          const Icon = navIconMap[link.href] || Circle;
+          return (
+            <a
+              key={link.href}
+              href={link.href}
+              aria-label={link.label}
+              aria-current={isActive ? "page" : undefined}
+              className={`flex flex-col items-center justify-center p-2 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-orange-500 transition-colors ${
+                isActive ? "text-green-400" : "text-white/70 hover:text-white"
+              }`}
+            >
+              <Icon size={22} />
+            </a>
+          );
+        })}
+      </nav>
+    </>
   );
 }
