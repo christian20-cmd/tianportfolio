@@ -59,7 +59,7 @@ function Hero() {
         ref={imgRef}
         src={heroimage}
         alt="Christian Nomenjanahary"
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[58vw] sm:w-[42vw] lg:w-[32vw] max-w-sm object-contain pointer-events-none select-none z-10"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 lg:w-[40vw] max-w-sm object-contain pointer-events-none select-none z-10"
       />
 
       {/* Ombre au sol — ancre la photo dans la scène. */}
