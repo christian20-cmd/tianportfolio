@@ -457,7 +457,7 @@ function AboutSection() {
           <span ref={downloadBtnRef} onClick={handleDownloadClick} className="inline-block">
             <FillButton
               as="a"
-              href="/cv.pdf"
+              href="/Cv_Christian.pdf"
               download
               fillColor="#ffffff"
               textColor="#ffffff"
