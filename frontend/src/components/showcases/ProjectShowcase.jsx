@@ -7,13 +7,33 @@ import SeamlessCardGallery from "./SeamlessCardGallery";
 import MonitorFrame from "./MonitorFrame";
 import PhoneFrame from "./PhoneFrame";
 import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
+import { pick } from "../../i18n/pick";
 
 export default function ProjectShowcase({ project, onBack }) {
+  const { lang } = useLanguage();
   const [activeIndex, setActiveIndex] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
   const isMobile = project.type === "mobile";
   const shot = project.screenshots?.[activeIndex];
   const images = project.screenshots?.map((s) => s.image || s.src) ?? [];
+
+  // Champs localisés du projet
+  const categorie = pick(project.categorie, lang);
+  const role = pick(project.role, lang);
+  const client = pick(project.client, lang);
+  const description = pick(project.description, lang);
+  const tagline = pick(project.tagline, lang);
+
+  // Champs localisés du screenshot actif
+  const shotTitre = pick(shot?.titre, lang);
+  const shotCaption = pick(shot?.caption, lang);
+  const shotTraitement = pick(shot?.traitement, lang) ?? [];
+
+  const labels = {
+    fr: { online: "En ligne", local: "En local", project: "Projet", treatment: "Traitement", stack: "Stack" },
+    en: { online: "Live", local: "Local", project: "Project", treatment: "Details", stack: "Stack" },
+  }[lang];
 
   const sectionRef = useRef(null);
   const bgRef = useRef(null);
@@ -100,7 +120,7 @@ export default function ProjectShowcase({ project, onBack }) {
       <button
         type="button"
         onClick={() => setPanelOpen((p) => !p)}
-        aria-label={panelOpen ? "Fermer le panneau" : "Ouvrir le panneau"}
+        aria-label={panelOpen ? (lang === "fr" ? "Fermer le panneau" : "Close panel") : (lang === "fr" ? "Ouvrir le panneau" : "Open panel")}
         className="fixed right-6 top-6 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/70 backdrop-blur-sm transition-colors hover:text-white hover:border-white/40 lg:hidden"
       >
         <span className="relative flex h-4 w-4 items-center justify-center">
@@ -130,9 +150,9 @@ export default function ProjectShowcase({ project, onBack }) {
           ref={mainRef}
           className="flex flex-1 min-h-0 flex-col items-center justify-center text-center overflow-hidden pt-6 pb-4 lg:pb-6"
         >
-          {shot?.titre && (
+          {shotTitre && (
             <h2 className="text-xl font-borel text-white/80 mt-4">
-              {shot.titre}
+              {shotTitre}
             </h2>
           )}
           <div className="flex items-center justify-center w-full">
@@ -148,9 +168,9 @@ export default function ProjectShowcase({ project, onBack }) {
 
             <div ref={laptopWrapRef} className="w-full max-w-3xl">
               {isMobile ? (
-                <MobileShowcase screenshots={project.screenshots} activeIndex={activeIndex} />
+                <MobileShowcase screenshots={project.screenshots} activeIndex={activeIndex} lang={lang} />
               ) : (
-                <DesktopShowcase screenshots={project.screenshots} activeIndex={activeIndex} />
+                <DesktopShowcase screenshots={project.screenshots} activeIndex={activeIndex} lang={lang} />
               )}
             </div>
 
@@ -206,7 +226,7 @@ export default function ProjectShowcase({ project, onBack }) {
 
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs uppercase tracking-widest text-white">
-              {project.categorie || "Projet"}
+              {categorie || labels.project}
             </span>
             {project.status && (
               <span className="flex items-center gap-1.5 bg-white/10 border border-white/15 px-2.5 py-0.5 rounded-full shrink-0">
@@ -221,7 +241,7 @@ export default function ProjectShowcase({ project, onBack }) {
                   />
                 </span>
                 <span className="text-white text-[10px] font-poppins whitespace-nowrap">
-                  {project.status === "deployed" ? "En ligne" : "En local"}
+                  {project.status === "deployed" ? labels.online : labels.local}
                 </span>
               </span>
             )}
@@ -231,16 +251,16 @@ export default function ProjectShowcase({ project, onBack }) {
             {project.title}
           </h1>
 
-          {(project.role || project.client) && (
+          {(role || client) && (
             <p className="text-xs text-white/70">
-              {project.role && <span className="text-orange-400">{project.role}</span>}
-              {project.role && project.client && <span className="mx-1.5">·</span>}
-              {project.client && <span>{project.client}</span>}
+              {role && <span className="text-orange-400">{role}</span>}
+              {role && client && <span className="mx-1.5">·</span>}
+              {client && <span>{client}</span>}
             </p>
           )}
 
           <p className="text-[10px] leading-relaxed text-white/50">
-            {project.description || project.tagline}
+            {description || tagline}
           </p>
 
           <div className="flex items-center justify-between gap-3">
@@ -250,23 +270,23 @@ export default function ProjectShowcase({ project, onBack }) {
             )}
           </div>
 
-          {shot?.titre && (
+          {shotTitre && (
             <h2 className="text-lg font-borel text-white/80 mt-4">
-              {shot.titre}
+              {shotTitre}
             </h2>
           )}
 
-          {shot?.caption && (
-            <p className="text-xs leading-relaxed text-white/50">{shot.caption}</p>
+          {shotCaption && (
+            <p className="text-xs leading-relaxed text-white/50">{shotCaption}</p>
           )}
 
-          {shot?.traitement?.length > 0 && (
+          {shotTraitement.length > 0 && (
             <div className="flex flex-col gap-2 mt-2">
               <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
-                Traitement
+                {labels.treatment}
               </span>
               <ul className="flex flex-col gap-1.5">
-                {shot.traitement.map((item, i) => (
+                {shotTraitement.map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-xs text-white/60 leading-snug">
                     <span className="mt-1.5 h-1 w-1 rounded-full shrink-0" />👉 {item}
                   </li>
@@ -278,7 +298,7 @@ export default function ProjectShowcase({ project, onBack }) {
           {project.tools?.length > 0 && (
             <div className="flex flex-col gap-3 mt-8">
               <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
-                Stack
+                {labels.stack}
               </span>
               <div className="flex flex-wrap gap-3">
                 {project.tools.map((tool, i) => (

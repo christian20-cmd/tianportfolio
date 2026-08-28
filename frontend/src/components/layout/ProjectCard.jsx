@@ -1,11 +1,13 @@
 // src/components/layout/ProjectCard.jsx
 import { Monitor, Smartphone, Globe, Download, ExternalLink } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
+import { pick } from "../../i18n/pick";
 
 export default function ProjectCard({ project, onClick }) {
+  const { lang } = useLanguage();
+
   const {
     title,
-    tagline,
-    categorie,
     number,
     year,
     image,
@@ -13,21 +15,24 @@ export default function ProjectCard({ project, onClick }) {
     inProgress,
     status,
     type,
-    role,
     link,
     downloadLink,
   } = project;
 
+  const tagline = pick(project.tagline, lang);
+  const categorie = pick(project.categorie, lang);
+  const role = pick(project.role, lang);
+
   const statusConfig = {
-    deployed: { label: "En ligne", dot: "bg-green-500" },
-    local: { label: "En local", dot: "bg-orange-400" },
+    deployed: { label: lang === "fr" ? "En ligne" : "Live", dot: "bg-green-500" },
+    local: { label: lang === "fr" ? "En local" : "Local", dot: "bg-orange-400" },
   };
   const currentStatus = statusConfig[status];
 
   const typeConfig = {
-    mobile: { label: "Mobile", icon: Smartphone },
-    desktop: { label: "Desktop", icon: Monitor },
-    web: { label: "Web", icon: Globe },
+    mobile: { label: lang === "fr" ? "Mobile" : "Mobile", icon: Smartphone },
+    desktop: { label: lang === "fr" ? "Desktop" : "Desktop", icon: Monitor },
+    web: { label: lang === "fr" ? "Web" : "Web", icon: Globe },
   };
   const currentType = typeConfig[type];
 
@@ -66,7 +71,6 @@ export default function ProjectCard({ project, onClick }) {
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleAction()}
       className="group relative w-full flex flex-col rounded-sm overflow-hidden bg-[#EDE9E4] shadow cursor-pointer transition-shadow"    >
-      {/* Image zone — clean, no dark overlay, no badges on top of it */}
       <div className="relative w-full aspect-5/4 overflow-hidden bg-neutral-400">
         {image ? (
           <img
@@ -82,7 +86,6 @@ export default function ProjectCard({ project, onClick }) {
           </div>
         )}
 
-        {/* Small unobtrusive top-left dot like the reference (optional status indicator) */}
         {currentStatus && (
           <div className="absolute top-3 left-3 flex items-center">
             <span className="relative flex h-2 w-2">
@@ -96,7 +99,6 @@ export default function ProjectCard({ project, onClick }) {
           </div>
         )}
 
-        {/* Type / action icon — minimal, top-right, only visible on hover */}
         {(currentType || ActionIcon) && (
           <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {currentType && (
@@ -116,14 +118,13 @@ export default function ProjectCard({ project, onClick }) {
           <div className="absolute bottom-32 right-28 -rotate-10">
             <div className="border-2 border-red-600/90 rounded-md px-2 bg-white/80 backdrop-blur-sm">
               <span className="text-red-600/90 text-lg font-bold uppercase tracking-widest font-baloo whitespace-nowrap">
-                En cours
+                {lang === "fr" ? "En cours" : "In progress"}
               </span>
             </div>
           </div>
         )}
       </div>
 
-      {/* Text zone — light background, bold title, small gray description, like the reference */}
       <div className="flex flex-col pt-4 pb-2 px-1">
         <div className="flex items-center justify-between gap-2">
           <h3 className="text-black font-poppins font-semibold text-xl leading-tight">

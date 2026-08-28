@@ -1,11 +1,11 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import MonitorFrame from './MonitorFrame';
-
+import { pick } from '../../i18n/pick';
 
 const MONITOR_MAX_WIDTH = 1347;
 const MONITOR_MAX_HEIGHT = 628;
 
-export default function DesktopShowcase({ screenshots, activeIndex }) {
+export default function DesktopShowcase({ screenshots, activeIndex, lang = 'fr' }) {
   const viewportRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef({ y: 0, scrollTop: 0 });
@@ -13,6 +13,7 @@ export default function DesktopShowcase({ screenshots, activeIndex }) {
   const hasScreenshots = screenshots && screenshots.length > 0;
   const current = hasScreenshots ? (screenshots[activeIndex] || screenshots[0]) : null;
   const imageUrl = current ? (current.src || current.image || '') : '';
+  const currentTitre = pick(current?.titre, lang);
 
   const frameStyle = {
     maxWidth: `${MONITOR_MAX_WIDTH}px`,
@@ -21,7 +22,6 @@ export default function DesktopShowcase({ screenshots, activeIndex }) {
     margin: '0 auto',
   };
 
-  // Reset du scroll à chaque changement de slide
   useLayoutEffect(() => {
     if (viewportRef.current) {
       viewportRef.current.scrollTop = 0;
@@ -35,18 +35,16 @@ export default function DesktopShowcase({ screenshots, activeIndex }) {
           className="flex items-center justify-center h-full w-full bg-black/20 text-white/30"
           style={frameStyle}
         >
-          <p className="text-sm">Aucune capture</p>
+          <p className="text-sm">{lang === 'fr' ? 'Aucune capture' : 'No screenshot'}</p>
         </div>
       </MonitorFrame>
     );
   }
 
-  // Empêche le wheel de remonter jusqu'à ProjectShowcase (qui changerait de slide)
   const handleWheel = (e) => {
     e.stopPropagation();
   };
 
-  // Drag à la souris pour scroller (comme sur mobile/tablette)
   const handleMouseDown = (e) => {
     setIsDragging(true);
     dragStartRef.current = {
@@ -80,7 +78,7 @@ export default function DesktopShowcase({ screenshots, activeIndex }) {
         {imageUrl ? (
           <img
             src={imageUrl}
-            alt={current.titre || 'Screenshot'}
+            alt={currentTitre || 'Screenshot'}
             className="block w-full h-auto select-none"
             draggable={false}
             onError={(e) => {
@@ -94,7 +92,7 @@ export default function DesktopShowcase({ screenshots, activeIndex }) {
           />
         ) : (
           <div className="flex items-center justify-center h-full text-white/20">
-            <p className="text-sm">Image non disponible</p>
+            <p className="text-sm">{lang === 'fr' ? 'Image non disponible' : 'Image not available'}</p>
           </div>
         )}
       </div>

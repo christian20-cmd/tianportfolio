@@ -1,8 +1,8 @@
 import { useRef, useState, useLayoutEffect } from 'react';
 import PhoneFrame from './PhoneFrame';
+import { pick } from '../../i18n/pick';
 
-
-export default function MobileShowcase({ screenshots, activeIndex }) {
+export default function MobileShowcase({ screenshots, activeIndex, lang = 'fr' }) {
   const viewportRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef({ y: 0, scrollTop: 0 });
@@ -10,8 +10,8 @@ export default function MobileShowcase({ screenshots, activeIndex }) {
   const hasScreenshots = screenshots && screenshots.length > 0;
   const current = hasScreenshots ? (screenshots[activeIndex] || screenshots[0]) : null;
   const imageUrl = current ? (current.src || current.image || '') : '';
+  const currentTitre = pick(current?.titre, lang);
 
-  // Reset du scroll à chaque changement de slide
   useLayoutEffect(() => {
     if (viewportRef.current) {
       viewportRef.current.scrollTop = 0;
@@ -22,18 +22,16 @@ export default function MobileShowcase({ screenshots, activeIndex }) {
     return (
       <PhoneFrame>
         <div className="flex items-center justify-center h-full bg-black/20 text-white/30">
-          <p className="text-sm">Aucune capture</p>
+          <p className="text-sm">{lang === 'fr' ? 'Aucune capture' : 'No screenshot'}</p>
         </div>
       </PhoneFrame>
     );
   }
 
-  // Empêche le wheel de remonter jusqu'à ProjectShowcase (qui changerait de slide)
   const handleWheel = (e) => {
     e.stopPropagation();
   };
 
-  // Drag à la souris pour scroller (en plus du tactile natif)
   const handleMouseDown = (e) => {
     setIsDragging(true);
     dragStartRef.current = {
@@ -66,7 +64,7 @@ export default function MobileShowcase({ screenshots, activeIndex }) {
         {imageUrl ? (
           <img
             src={imageUrl}
-            alt={current.titre || 'Screenshot'}
+            alt={currentTitre || 'Screenshot'}
             className="block w-full h-auto select-none"
             draggable={false}
             onError={(e) => {
@@ -80,7 +78,7 @@ export default function MobileShowcase({ screenshots, activeIndex }) {
           />
         ) : (
           <div className="flex items-center justify-center h-full text-white/20">
-            <p className="text-sm">Image non disponible</p>
+            <p className="text-sm">{lang === 'fr' ? 'Image non disponible' : 'Image not available'}</p>
           </div>
         )}
       </div>

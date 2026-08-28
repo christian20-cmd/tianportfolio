@@ -3,62 +3,62 @@ import { SiGithub, SiGmail, SiWhatsapp } from "react-icons/si";
 import Footer from "./Footer";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
 import FillButton from "../layout/Fillbutton";
-
-const contacts = [
-  {
-    icon: SiWhatsapp,
-    label: "WhatsApp",
-    value: "+261 34 52 717 18",
-    href: "https://wa.me/26134527118",
-    color: "#25D366",
-  },
-  {
-    icon: Phone,
-    label: "Téléphone",
-    value: "+261 34 95 906 08",
-    href: "tel:+26134527118",
-    color: "#ffffff",
-  },
-  {
-    icon: SiGmail,
-    label: "Email",
-    value: "christian20.cmd@gmail.com",
-    href: "mailto:christian20.cmd@gmail.com",
-    color: "#EA4335",
-  },
-  {
-    icon: SiGithub,
-    label: "GitHub",
-    value: "christian20-cmd",
-    href: "https://github.com/christian20-cmd",
-    color: "#ffffff",
-  },
-];
-
+import { useLanguage } from "../../context/LanguageContext"; // adapte le chemin
+import { translations } from "../../i18n/translations"; // adapte le chemin
 
 export default function ContactSection() {
   const sectionRef = useIntersectionObserver();
+  const { lang } = useLanguage();
+  const t = translations[lang].contact;
+
+  const contacts = [
+    {
+      icon: SiWhatsapp,
+      label: t.labels.whatsapp,
+      value: "+261 34 52 717 18",
+      href: "https://wa.me/26134527118",
+      color: "#25D366",
+    },
+    {
+      icon: Phone,
+      label: t.labels.phone,
+      value: "+261 34 95 906 08",
+      href: "tel:+26134527118",
+      color: "#ffffff",
+    },
+    {
+      icon: SiGmail,
+      label: t.labels.email,
+      value: "christian20.cmd@gmail.com",
+      href: "mailto:christian20.cmd@gmail.com",
+      color: "#EA4335",
+    },
+    {
+      icon: SiGithub,
+      label: t.labels.github,
+      value: "christian20-cmd",
+      href: "https://github.com/christian20-cmd",
+      color: "#ffffff",
+    },
+  ];
 
   return (
-    <section ref={sectionRef} id="contact" className="relative  bg-black">
-      
-
+    <section ref={sectionRef} id="contact" className="relative bg-black">
       <div className="relative z-10 max-w-6xl mx-auto py-10 px-6">
         <div className="reveal bg-black items-center text-center justify-center flex flex-col w-full pb-8 px-4">
           <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 w-full max-w-xl">
             <div className="bar-anim section-bar bg-green-600"></div>
-            <span className=" text-2xl text-white">Contactez-moi</span>
+            <span className="text-2xl text-white">{t.sectionTitle}</span>
             <div className="bar-anim section-bar bg-green-600"></div>
           </div>
-          
         </div>
 
         <div className="flex flex-col md:flex-row items-center md:items-center justify-between gap-12">
           <div className="reveal flex-1 flex items-center justify-center md:justify-start">
             <h2 className="font-poppins text-white font-bold text-5xl md:text-6xl lg:text-7xl leading-none text-center md:text-left">
-              Discutons <br className="hidden md:block" />
+              {t.headingLine1} <br className="hidden md:block" />
               <span className="text-6xl md:text-7xl lg:text-9xl xl:text-[8rem] text-green-600 font-medium">
-                Ensemble...
+                {t.headingLine2}
               </span>
             </h2>
           </div>
@@ -73,7 +73,7 @@ export default function ContactSection() {
                 rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                 style={{ transitionDelay: `${i * 90}ms` }}
                 fillColor="#242426"
-                className="reveal group w-72 items-center  gap-4 bg-[#1c1c1e] rounded-full p-2"
+                className="reveal group w-72 items-center gap-4 bg-[#1c1c1e] rounded-full p-2"
               >
                 <div
                   className="flex items-center justify-center w-8 h-8 rounded-full shrink-0 bg-black/40"

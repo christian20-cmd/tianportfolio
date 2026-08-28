@@ -6,6 +6,7 @@ import Projets from "../components/sections/Projets";
 import ContactSection from "../components/sections/ContactSection";
 import ContactButton from "../components/layout/ContactButton";
 import ProjectShowcase from "../components/showcases/ProjectShowcase";
+import { LanguageProvider } from "../context/LanguageContext";
 
 export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -26,7 +27,7 @@ export default function Portfolio() {
   }, [selectedProject]);
 
   return (
-    <>
+    <LanguageProvider>
       <div className="relative bg-gradient-to-br font-fredoka from-gray-200 via-gray-100 to-gray-100">
         <div className="fixed inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none">
           <span className="text-[7rem] md:text-[11.7rem] font-poppins uppercase font-baloo font-bold text-gray-900/10 select-none whitespace-nowrap">
@@ -47,6 +48,6 @@ export default function Portfolio() {
       {selectedProject && (
         <ProjectShowcase project={selectedProject} onBack={handleBack} />
       )}
-    </>
+    </LanguageProvider>
   );
 }

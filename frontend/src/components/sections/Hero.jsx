@@ -2,193 +2,84 @@ import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import heroimage from "../../assets/heroimage.png";
 import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
-import '@fontsource/anton'
+import { useLanguage } from "../../context/LanguageContext"; // adapte le chemin si besoin
+import { translations } from "../../i18n/translations"; // adapte le chemin si besoin
+import '@fontsource/anton';
 
-const ZONE_1 = "polygon(0% 0%, 70% 0%, 5% 100%, 0% 100%)";
-const ZONE_2 = "polygon(70% 0%, 100% 0%, 35% 100%, 5% 100%)";
-const ZONE_3 = "polygon(100% 0%, 100% 0%, 100% 100%, 35% 100%)";
-
-const SPOT_RADIUS = 90;
-
-const imgBaseClass =
-  "absolute top-4 sm:top-6 lg:top-8 left-1/2 -translate-x-1/2 w-72 h-[26rem] sm:w-80 sm:h-[30rem] lg:w-[26rem] lg:h-[38rem] xl:w-[28rem] xl:h-[620px] object-cover object-top opacity-60";
-
-const textBaseClass =
-  "text-[18vw] sm:text-[16vw] lg:text-[14vw] font-extrabold tracking-tight text-neutral-400 whitespace-nowrap leading-none";
-
+/**
+ * Hero — mot énorme en blanc, POSÉ AU-DESSUS de la photo (z-index plus
+ * haut). Le texte utilise mix-blend-mode: difference, donc là où il
+ * chevauche la photo, il "disparaît"/se fond dans les couleurs de la
+ * photo au lieu de rester blanc plein — l'effet de transparence demandé.
+ * Sur le fond noir de la section, le blanc reste blanc (difference avec
+ * du noir = pas de changement).
+ */
 function Hero() {
   const sectionRef = useIntersectionObserver();
-  const text1Ref = useRef(null);
-  const text2Ref = useRef(null);
-  const text3Ref = useRef(null);
-  const fill1Ref = useRef(null);
-  const fill2Ref = useRef(null);
-  const fill3Ref = useRef(null);
-  const hoverZoneRef = useRef(null);
-  const fillRefs = [fill1Ref, fill2Ref, fill3Ref];
+  const { lang } = useLanguage();
+  const t = translations[lang];
+
+  const textRef = useRef(null);
+  const imgRef = useRef(null);
+  const shadowRef = useRef(null);
 
   useEffect(() => {
     const tl = gsap.timeline({ delay: 0.2 });
 
     tl.fromTo(
-      text1Ref.current,
-      { y: -80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
+      textRef.current,
+      { y: -60, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
       0
     )
       .fromTo(
-        text2Ref.current,
-        { y: 80, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
-        0.1
+        imgRef.current,
+        { y: 40, opacity: 0, scale: 0.96 },
+        { y: 0, opacity: 1, scale: 1, duration: 1.1, ease: "power3.out" },
+        0.25
       )
       .fromTo(
-        text3Ref.current,
-        { y: -80, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
-        0.2
+        shadowRef.current,
+        { opacity: 0, scaleX: 0.6 },
+        { opacity: 1, scaleX: 1, duration: 1, ease: "power3.out" },
+        0.5
       );
 
     return () => tl.kill();
-  }, []);
-
-  useEffect(() => {
-    const zone = hoverZoneRef.current;
-    if (!zone) return;
-
-    const setters = fillRefs.map((ref) => {
-      if (!ref.current) return null;
-      return {
-        x: gsap.quickTo(ref.current, "--mx", { duration: 0.15, ease: "power2.out" }),
-        y: gsap.quickTo(ref.current, "--my", { duration: 0.15, ease: "power2.out" }),
-        el: ref.current,
-      };
-    });
-
-    const handleMove = (e) => {
-      setters.forEach((s) => {
-        if (!s) return;
-        const rect = s.el.getBoundingClientRect();
-        const xPct = ((e.clientX - rect.left) / rect.width) * 100;
-        const yPct = ((e.clientY - rect.top) / rect.height) * 100;
-        s.x(xPct);
-        s.y(yPct);
-      });
-      fillRefs.forEach((ref) => {
-        if (ref.current) gsap.to(ref.current, { opacity: 1, duration: 0.2, overwrite: "auto" });
-      });
-    };
-
-    const handleLeave = () => {
-      fillRefs.forEach((ref) => {
-        if (ref.current) gsap.to(ref.current, { opacity: 0, duration: 0.35, overwrite: "auto" });
-      });
-    };
-
-    zone.addEventListener("mousemove", handleMove);
-    zone.addEventListener("mouseleave", handleLeave);
-
-    return () => {
-      zone.removeEventListener("mousemove", handleMove);
-      zone.removeEventListener("mouseleave", handleLeave);
-    };
-  }, []);
+  }, [lang]);
 
   return (
-    <section ref={sectionRef} id="accueil" className="relative min-h-screen font-poppins overflow-hidden bg-black">
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-black" style={{ clipPath: ZONE_1 }} />
-        <div className="absolute inset-0 bg-neutral-800" style={{ clipPath: ZONE_2 }} />
-        <div className="absolute inset-0 bg-black" style={{ clipPath: ZONE_3 }} />
-      </div>
+    <section
+      ref={sectionRef}
+      id="accueil"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+    >
+      {/* Photo — plus petite, en arrière-plan (z-10). */}
+      <img
+        ref={imgRef}
+        src={heroimage}
+        alt="Christian Nomenjanahary"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[58vw] sm:w-[42vw] lg:w-[32vw] max-w-sm object-contain pointer-events-none select-none z-10"
+      />
 
-      <div ref={hoverZoneRef} className="absolute inset-0 z-20 cursor-default" />
-
+      {/* Ombre au sol — ancre la photo dans la scène. */}
       <div
-        className="absolute inset-0 z-[5] pointer-events-none overflow-hidden mix-blend-exclusion"
-        aria-hidden="true"
-      >
-        <div className="absolute font-anton inset-0 flex items-end justify-center pb-10" style={{ clipPath: ZONE_1 }}>
-          <span ref={text1Ref} className={`${textBaseClass} relative`}>
-            DÉVELOPPEUR
-            <span
-              ref={fill1Ref}
-              className="absolute inset-0 font-anton text-white opacity-0"
-              style={{
-                "--mx": "50%",
-                "--my": "50%",
-                maskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
-                WebkitMaskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
-              }}
-              aria-hidden="true"
-            >
-              DÉVELOPPEUR
-            </span>
-          </span>
-        </div>
-        <div className="absolute font-anton inset-0 flex items-end justify-center pb-10" style={{ clipPath: ZONE_2 }}>
-          <span ref={text2Ref} className={`${textBaseClass} relative`}>
-            DÉVELOPPEUR
-            <span
-              ref={fill2Ref}
-              className="absolute inset-0 font-anton text-white opacity-0"
-              style={{
-                "--mx": "50%",
-                "--my": "50%",
-                maskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
-                WebkitMaskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
-              }}
-              aria-hidden="true"
-            >
-              DÉVELOPPEUR
-            </span>
-          </span>
-        </div>
-        <div className="absolute font-anton inset-0 flex items-end justify-center pb-10" style={{ clipPath: ZONE_3 }}>
-          <span ref={text3Ref} className={`${textBaseClass} relative`}>
-            DÉVELOPPEUR
-            <span
-              ref={fill3Ref}
-              className="absolute inset-0 font-anton text-white opacity-0"
-              style={{
-                "--mx": "50%",
-                "--my": "50%",
-                maskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
-                WebkitMaskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
-              }}
-              aria-hidden="true"
-            >
-              DÉVELOPPEUR
-            </span>
-          </span>
-        </div>
-      </div>
+        ref={shadowRef}
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[26%] h-5 bg-black/60 rounded-full blur-2xl z-0"
+      />
 
-      <div className="reveal absolute inset-0 z-10">
-        <div className="absolute inset-0" style={{ clipPath: ZONE_1 }}>
-          <img
-            src={heroimage}
-            alt="Christian Nomenjanahary"
-            className={`${imgBaseClass} grayscale contrast-125 brightness-75`}
-          />
-        </div>
-        <div className="absolute inset-0" style={{ clipPath: ZONE_2 }}>
-          <img
-            src={heroimage}
-            alt=""
-            aria-hidden="true"
-            className={`${imgBaseClass} grayscale contrast-125 brightness-90`}
-          />
-        </div>
-        <div className="absolute inset-0" style={{ clipPath: ZONE_3 }}>
-          <img
-            src={heroimage}
-            alt=""
-            aria-hidden="true"
-            className={`${imgBaseClass} grayscale contrast-125 brightness-75`}
-          />
-        </div>
-      </div>
+      {/* Mot géant — au premier plan (z-20), blanc, et transparent
+          (grâce au blend mode) là où il passe devant la photo. */}
+      <h1
+        ref={textRef}
+        className="font-anton select-none text-center leading-[0.78] tracking-tight px-4 text-white relative z-20"
+        style={{
+          fontSize: "clamp(4.5rem, 22vw, 16rem)",
+          mixBlendMode: "difference",
+        }}
+      >
+        {t.hero.title}
+      </h1>
     </section>
   );
 }
