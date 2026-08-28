@@ -1,129 +1,372 @@
-import { useReveal } from "../../hooks/useReveal";
-import { DownloadIcon } from "lucide-react";
-import profil from "../../assets/imagecontact.png";
+import { useRef, useState } from "react";
+import {
+  Download,
+  Play,
+  Code2,
+  Server,
+  PenTool,
+  Wrench,
+  Rocket,
+  ChevronsRight,
+  MapPin,
+  Phone,
+  Mail,
+  BadgeCheck,
+} from "lucide-react";
+import { SiWhatsapp, SiFacebook, SiGithub } from "react-icons/si";
+import profil from "../../assets/heroimage.png";
+import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
+import FillButton from "../layout/Fillbutton";
 
 import {
   SiReact,
   SiVite,
   SiJavascript,
   SiTailwindcss,
-  SiHtml5,
-  SiCss,
-  SiFramer,
-  SiExpo,
-  SiFlutter,
-  SiGsap,
+  SiNodedotjs,
+  SiPostgresql,
 } from "react-icons/si";
 
-const skills = [
-  { icon: SiReact, label: "React", color: "#61DAFB" },
-  { icon: SiVite, label: "Vite", color: "#9C4AF8" },
-  { icon: SiJavascript, label: "JavaScript", color: "#F7DF1E" },
-  { icon: SiTailwindcss, label: "Tailwind CSS", color: "#38BDF8" },
-  { icon: SiHtml5, label: "HTML5", color: "#E34F26" },
-  { icon: SiCss, label: "CSS3", color: "#6924CE" },
-  { icon: SiFramer, label: "Framer Motion", color: "#0055FF" },
-  { icon: SiGsap, label: "GSAP", color: "#0FE84A" },
-  { icon: SiFlutter, label: "Flutter", color: "#0055FF" },
-  { icon: SiReact, label: "React Native", color: "#61DAFB" },
-  { icon: SiExpo, label: "Expo", color: "#FFFFFF" },
+// --- SVG icons non fournis (ou instables) par react-icons/si ---
+
+// Logo Figma officiel multi-couleurs (F24E1E / FF7262 / A259FF / 1ABCFE / 0ACF83)
+function FigmaSVG({ size = 50 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 38 57"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19 28.5C19 23.8056 22.8056 20 27.5 20C32.1944 20 36 23.8056 36 28.5C36 33.1944 32.1944 37 27.5 37C22.8056 37 19 33.1944 19 28.5Z"
+        fill="#1ABCFE"
+      />
+      <path
+        d="M2 47.5C2 42.8056 5.80558 39 10.5 39H19V47.5C19 52.1944 15.1944 56 10.5 56C5.80558 56 2 52.1944 2 47.5Z"
+        fill="#0ACF83"
+      />
+      <path
+        d="M19 2V20H27.5C32.1944 20 36 16.1944 36 11.5C36 6.80558 32.1944 3 27.5 3L19 2Z"
+        fill="#FF7262"
+      />
+      <path
+        d="M2 11.5C2 16.1944 5.80558 20 10.5 20H19V3H10.5C5.80558 3 2 6.80558 2 11.5Z"
+        fill="#F24E1E"
+      />
+      <path
+        d="M2 28.5C2 33.1944 5.80558 37 10.5 37H19V20H10.5C5.80558 20 2 23.8056 2 28.5Z"
+        fill="#A259FF"
+      />
+    </svg>
+  );
+}
+
+// Icône Adobe XD officielle : carré arrondi violet foncé + wordmark rose "Xd"
+function AdobeXdSVG({ size = 50 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 240 240"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="240" height="240" rx="42" fill="#470137" />
+      <text
+        x="120"
+        y="158"
+        textAnchor="middle"
+        fontFamily="Arial, Helvetica, sans-serif"
+        fontWeight="bold"
+        fontSize="110"
+        fill="#FF61F6"
+      >
+        Xd
+      </text>
+    </svg>
+  );
+}
+
+const services = [
+  { icon: Code2, label: "Frontend", sub: "Interfaces", stars: 4 },
+  { icon: Server, label: "Backend", sub: "APIs", stars: 3 },
+  { icon: PenTool, label: "Conception", sub: "UI / UX & UML", active: true, stars: 4 },
+  { icon: Wrench, label: "Maintenance", sub: "Support", stars: 4 },
+  { icon: Rocket, label: "Déploiement", sub: "Mise en ligne", stars: 4 },
 ];
 
-const introText =
-  "Chaque histoire est unique, faite de choix, d'expériences et de découvertes. Cette section retrace la mienne : ce qui m'a mené jusqu'ici, et les valeurs qui guident aujourd'hui mon travail.";
+const skills = [
+  { icon: SiJavascript, label: "JavaScript", color: "#F7DF1E", level: 85 },
+  { icon: SiReact, label: "React", color: "#61DAFB", level: 90 },
+  { icon: SiVite, label: "Vite", color: "#9C4AF8", level: 80 },
+  { icon: SiTailwindcss, label: "Tailwind CSS", color: "#38BDF8", level: 88 },
+  { icon: SiNodedotjs, label: "Node.js", color: "#8CC84B", level: 78 },
+  { icon: SiPostgresql, label: "PostgreSQL", color: "#336791", level: 75 },
+  { icon: FigmaSVG, label: "Figma", color: "#F24E1E", level: 70, isSvg: true },
+  { icon: AdobeXdSVG, label: "Adobe XD", color: "#FF61F6", level: 65, isSvg: true },
+];
 
-function AboutSection() {
-  const sectionRef = useReveal();
+function SkillIcon({ icon: Icon, label, color, level, isSvg }) {
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <section ref={sectionRef} id="a-propos" className="relative z-10 bg-black">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute z-50 -right-24 w-80 h-80 rounded-full bg-gray-500/30 blur-3xl"
-      />
+    <div
+      className="group relative flex flex-col items-center"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {isSvg ? (
+        <div className="transition-transform duration-300 group-hover:scale-110">
+          <Icon size={50} />
+        </div>
+      ) : (
+        <Icon
+          size={50}
+          color={color}
+          className="transition-transform duration-300 group-hover:scale-110"
+        />
+      )}
 
-      <div className="pb-48 md:pb-56">
-        <div className="reveal bg-black items-center text-center justify-center flex flex-col w-full pt-16 md:pt-20 pb-8 px-4">
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 w-full max-w-xl">
-            <div className="bar-anim section-bar bg-green-600"></div>
-            <span className="section-title text-gray-400">À propos de moi</span>
-            <div className="bar-anim section-bar bg-green-600"></div>
-          </div>
-          <p className="text-gray-600 text-xs sm:text-sm max-w-[550px]">{introText}</p>
+      {/* Bulle qui apparaît au survol */}
+      <div
+        className={`absolute -top-16 left-1/2 z-30 w-32 -translate-x-1/2 rounded-lg bg-black px-3 py-2 text-center shadow-lg transition-all duration-300 ${
+          hovered
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-2 opacity-0"
+        }`}
+      >
+        <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-white">
+          {label}
+        </p>
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/20">
+          <div
+            className="h-full rounded-full transition-all duration-500"
+            style={{
+              width: hovered ? `${level}%` : "0%",
+              backgroundColor: color,
+            }}
+          />
+        </div>
+        <p className="mt-1 text-[10px] font-bold text-white">{level}%</p>
+
+        {/* petite flèche */}
+        <div className="absolute left-1/2 top-full h-2 w-2 -translate-x-1/2 -translate-y-1 rotate-45 bg-black" />
+      </div>
+    </div>
+  );
+}
+
+function ServiceCard({ label, sub, stars = 5 }) {
+  return (
+    <div className="group flex flex-col items-center">
+      <div className="flex gap-1 mb-2">
+        {[...Array(5)].map((_, i) => (
+          <svg
+            key={i}
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill={i < stars ? "#FFD700" : "#D1D5DB"}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+          </svg>
+        ))}
+      </div>
+      <h3 className="font-poppins text-xl font-bold uppercase text-black">
+        {label}
+      </h3>
+      <p className="font-poppins text-sm text-start leading-relaxed text-black/60">
+        {sub}
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Carte de profil — reproduit exactement la mise en page de la référence :
+ * photo encadrée en haut (coins arrondis), nom + badge vérifié,
+ * sous-titre sur deux lignes (adresse / téléphone),
+ * puis une rangée basse avec les réseaux sociaux et un bouton de contact.
+ */
+function ProfileCard() {
+  const socials = [
+    { icon: Mail, href: "mailto:christian20.cmd@gmail.com", label: "Email" },
+    { icon: SiWhatsapp, href: "https://wa.me/261345271718", label: "WhatsApp" },
+    { icon: SiFacebook, href: "https://www.facebook.com/christian.smithdwell", label: "Facebook" },
+    { icon: SiGithub, href: "https://github.com/christian20-cmd", label: "GitHub" },
+  ];
+
+  return (
+    <div className="w-[350px] ">
+      {/* Photo encadrée */}
+      <div className="relative aspect-[5/4] w-full overflow-hidden  bg-gray-200 pt-4">
+        <img
+          src={profil}
+          alt="Christian Nomenjanahary"
+          className="h-full w-full object-cover object-top"
+        />
+      </div>
+
+      {/* Contenu texte */}
+      <div className="p-4 bg-white">
+        {/* Nom + badge vérifié */}
+        <div className="flex items-center gap-1.5">
+          <h3 className="font-poppins text-lg font-bold leading-tight text-black">
+            RANDRIAMAMPIONINA Nomenjanahary Christian
+          </h3>
+          <BadgeCheck size={30} className="shrink-0 fill-green-500 text-white" />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,340px)_1fr] xl:grid-cols-[minmax(0,400px)_1fr] items-stretch">
-          {/* Carte profil */}
-          <div className="reveal relative z-0 w-full">
-            <div className="relative overflow-hidden bg-black h-80 md:h-[420px] lg:h-full">
-              <img
-                src={profil}
-                alt="Christian Nomenjanahary"
-                className="w-full h-full object-contain lg:object-cover object-center lg:object-[center_15%]"
-              />
-              
-            </div>
+        {/* Adresse + téléphone (2 lignes, comme le sous-titre de la référence) */}
+        <div className="mt-1 space-y-0.5">
+          <div className="flex items-center gap-1 text-black/70">
+            <MapPin size={14} className="shrink-0" />
+            <p className="font-poppins  leading-snug">
+              Fianarantsoa, Madagascar
+            </p>
+          </div>
+          <div className="flex items-center gap-1 text-black/70">
+            <Phone size={14} className="shrink-0" />
+            <p className="font-poppins leading-snug">
+              +261 34 95 906 08
+            </p>
+          </div>
+        </div>
+
+        {/* Rangée basse : réseaux sociaux + bouton contact */}
+        <div className="mt-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            {socials.slice(0, 2).map(({ icon: Icon, href, label }, i) => (
+              <FillButton
+                key={i}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                fillColor="#ffffff"
+                textColor="#000000"
+                hoverTextColor="#000000"
+                className="items-center justify-center rounded-full p-1.5 text-black"
+              >
+                <Icon size={25} />
+              </FillButton>
+            ))}
+            {socials.slice(2, 4).map(({ icon: Icon, href, label }, i) => (
+              <FillButton
+                key={i}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                fillColor="#ffffff"
+                textColor="#000000"
+                hoverTextColor="#000000"
+                className="items-center justify-center rounded-full p-1.5 text-black"
+              >
+                <Icon size={25} />
+              </FillButton>
+            ))}
           </div>
 
-          {/* Bloc profesionnel */}
-          <div className="reveal relative z-10 pt-8 sm:pt-10 bg-black px-10 lg:px-24 shadow-xl overflow-hidden flex flex-col justify-center">
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-              <span className="text-[9rem] lg:text-[18rem] font-baloo font-bold text-white/5 select-none whitespace-nowrap">
-                {"</tian>"}
-              </span>
+          <FillButton
+            href="#contact"
+            fillColor="#ffffff"
+            textColor="#ffffff"
+            hoverTextColor="#000000"
+            className="items-center gap-1 rounded-full bg-black px-3 py-1.5 font-semibold text-white"
+          >
+            Contact
+          </FillButton>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AboutSection() {
+  const sectionRef = useIntersectionObserver();
+
+  return (
+    <section
+      ref={sectionRef}
+      id="a-propos"
+      className="relative min-h-screen w-full overflow-hidden bg-[#EDE9E4] font-poppins py-24"
+    >
+      
+
+      <div className="relative z-20 mx-auto flex min-h-[calc(100vh-88px)]  max-w-[1400px] flex-col lg:flex-row lg:items-center">
+        {/* Colonne texte gauche */}
+        <div className="flex w-full flex-col justify-center px-6 pt-6 sm:px-10 lg:w-[62%] lg:px-16">
+          <div className="reveal mb-8 flex items-center">
+            <ChevronsRight size={30} className="text-green-600" strokeWidth={4} />
+            <ChevronsRight size={30} className="text-green-600" strokeWidth={4} />
+            <span className="font-poppins ml-4 text-lg font-bold uppercase tracking-[0.25em] text-black/50">
+              À propos de moi
+            </span>
+          </div>
+          <h2 className="reveal font-poppins text-[clamp(1.8rem,4.5vw,3.6rem)] font-extrabold leading-[0.95] tracking-tight text-black">
+            Là où l'innovation rencontre un code pensé avec soin.
+          </h2>
+
+          {/* Mini-cartes avec hover sur pourcentage */}
+          <div className="reveal mt-20 flex flex-wrap gap-6">
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-8">
+              {skills.map((skill, i) => (
+                <SkillIcon key={`${skill.label}-${i}`} {...skill} />
+              ))}
             </div>
+          </div>
+        </div>
 
-            <h2 className="relative text-lg sm:text-2xl lg:text-3xl font-borel font-bold text-white leading-tight mb-2">
-              Développeur web et mobile.
-            </h2>
+        {/* Photo produit à droite + carte profil flottante */}
+        <div className=" flex flex-1 items-end justify-center px-6 lg:px-0">
+          
 
-            <p className="relative text-gray-400 font-poppins text-[10px] md:text-xs lg:text-sm leading-relaxed mb-4">
-              Je suis{" "}
-              <span className="text-green-600 font-semibold">
-                RANDRIAMAMPIONINA Nomenjanahary Christian
-              </span>
-              . Je développe des applications web et mobiles modernes, performantes et intuitives, avec un fort engagement envers la qualité, la performance et l'expérience utilisateur.
-            </p>
-
-            <div className="relative">
-              <span className="text-xs font-fredoka font-semibold uppercase tracking-wide text-white mb-4 block">
-                Mes outils
-              </span>
-              <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
-                {skills.map(({ icon: Icon, label, color }, i) => (
-                  <div
-                    key={label + i}
-                    style={{ transitionDelay: `${i * 50}ms` }}
-                    className="reveal-fade flex flex-col items-center"
-                  >
-                    <Icon size={28} className="sm:hidden" color={color} />
-                    <Icon size={34} className="hidden sm:block" color={color} />
-                    <span className="text-[10px] sm:text-[12px] font-fredoka text-stone-300 text-center leading-tight">
-                      {label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <a
-              href="/cv.pdf"
-              download
-              className="inline-flex items-center gap-2 justify-center w-full sm:w-auto sm:max-w-72 my-8 rounded-full bg-white text-gray-900 text-sm font-medium px-5 py-2 hover:bg-gray-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
-            >
-              Téléchargez mon CV <DownloadIcon size={17} />
-            </a>
+          {/* Carte profil, positionnée comme un badge flottant sur la photo */}
+          <div className="">
+            <ProfileCard />
           </div>
         </div>
       </div>
 
-      <svg
-        className="absolute bottom-0 left-0 w-full h-60 z-20 pointer-events-none"
-        viewBox="0 0 1440 200"
-        preserveAspectRatio="none"
-      >
-        <path d="M0,120 C360,200 1080,40 1440,120 L1440,200 L0,200 Z" fill="#EDEEF1" />
-      </svg>
+      {/* Bande de services en bas de la section */}
+      <div className="h-1.5 w-full bg-gray-300" />
+      <div className="py-10">
+        <div className="grid grid-cols-1  gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          {services.map((service, i) => (
+            <ServiceCard key={`${service.label}-${i}`} label={service.label} sub={service.sub} stars={service.stars} />
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-center py-8">
+        <div className="reveal flex flex-wrap items-center justify-center gap-4">
+          <FillButton
+            as="a"
+            href="/cv.pdf"
+            download
+            fillColor="#ffffff"
+            textColor="#ffffff"
+            hoverTextColor="#000000"
+            className="items-center gap-2 rounded-full bg-black px-6 py-3 text-md font-semibold uppercase tracking-widest text-white outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
+          >
+            Télécharger mon CV
+            <Download size={16} />
+          </FillButton>
+
+          <FillButton
+            as="a"
+            href="#projets"
+            fillColor="#000000"
+            textColor="#000000"
+            hoverTextColor="#ffffff"
+            className="items-center gap-2 rounded-full bg-white px-4 py-4 text-xs font-semibold uppercase tracking-widest text-black outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2"
+          >
+            <Play size={20} />
+          </FillButton>
+        </div>
+      </div>
     </section>
   );
 }

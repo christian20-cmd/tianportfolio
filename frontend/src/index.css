@@ -5,21 +5,17 @@
   --font-borel: "Borel", cursive;
   --font-baloo: "Baloo 2", cursive;
   --font-poppins: "Poppins", sans-serif;
+  --font-anton: "Anton", sans-serif;
 }
 /* index.css */
-@media (pointer: fine) {
-  * {
-    cursor: none !important;
-  }
-}
 html, body {
   overflow-x: hidden;
   width: 100%;
+  min-height: 100%;
 }
 html, body, #root {
   margin: 0;
   padding: 0;
-  height: 100%;
 
 }
 
@@ -99,4 +95,25 @@ html, body, #root {
     height: 0.75rem;
     max-width: 10rem;
   }
+}
+
+/* --- Navbar Animation Styles --- */
+.main-tool-bar {
+  background: transparent;
+  transition: background 0.4s ease;
+}
+
+.main-tool-bar.bg-black {
+  background: black;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.horiz-gallery-strip img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }

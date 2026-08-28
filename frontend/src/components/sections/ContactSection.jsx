@@ -1,7 +1,7 @@
-import { useReveal } from "../../hooks/useReveal";
 import { Phone, ArrowUpRight } from "lucide-react";
 import { SiGithub, SiGmail, SiWhatsapp } from "react-icons/si";
 import Footer from "./Footer";
+import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
 
 const contacts = [
   {
@@ -38,22 +38,17 @@ const introText =
   "Vous avez une idée, un projet ou une opportunité de collaboration ? Contactez-moi. Je serai heureux d'échanger avec vous et de concevoir une solution à la hauteur de vos ambitions.";
 
 export default function ContactSection() {
-  const sectionRef = useReveal();
+  const sectionRef = useIntersectionObserver();
 
   return (
-    <section
-      ref={sectionRef}
-      id="contact"
-      className="relative w-full pt-18 px-6 bg-black overflow-hidden"
-    >
+    <section ref={sectionRef} id="contact" className="relative min-h-screen bg-black">
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
         <span className="text-[17rem] md:text-[18rem] font-baloo font-bold text-white/5 select-none whitespace-nowrap">
           {"</tian>"}
         </span>
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto py-10">
-        {/* Header identique à About / Projets */}
+      <div className="relative z-10 max-w-6xl mx-auto py-10 px-6">
         <div className="reveal bg-black items-center text-center justify-center flex flex-col w-full pb-8 px-4">
           <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 w-full max-w-xl">
             <div className="bar-anim section-bar bg-green-600"></div>

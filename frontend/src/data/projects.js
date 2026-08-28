@@ -54,7 +54,7 @@ export const projects = [
       "Système ASP.NET Core avec ML.NET pour surveiller le trafic réseau et détecter automatique les comportements anormaux(Instrusions, DDos, scans de ports, malwares). Génère des alertes en temps réel de produit ds rapports d'analyse des anomalies détectées.",
     role: "Développement full-stack et Réseau",
     client: "Projet personnel",
-    type: "Web",
+    type: "web",
     tools: [
       { icon: SiReact, label: "React", color: "#61DAFB" },
       { icon: SiDotnet, label: "Dotnet", color: "#339933" },
@@ -314,11 +314,11 @@ export const projects = [
     number: "05",
     title: "StageConnect",
     slug: "stageconnect",
-    tagline: "Trouvez et gérez vos recherches de stage en un seul endroit",
+    tagline: "Recherche de stage en un seul endroit",
     categorie: "Plateforme web",
     description:
       "Application web permettant aux étudiants de rechercher, suivre et gérer leurs candidatures de stage. Le parcours d'inscription intègre une authentification OAuth multi-étapes avec upload de photo de profil, validation du numéro de téléphone par opérateur, et un système de connexion sécurisé avec vérification d'email et code à 6 chiffres auto-soumis",
-    role: "Développement frontend & intégration data",
+    role: "Développement full-stack",
     client: "Projet personnel",
     type: "web",
     tools: [

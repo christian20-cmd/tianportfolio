@@ -1,147 +1,192 @@
-import { useReveal } from "../../hooks/useReveal";
-import { Eye } from "lucide-react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 import heroimage from "../../assets/heroimage.png";
+import { useIntersectionObserver } from "../../hooks/useIntersectionObserver";
+import '@fontsource/anton'
 
-const skills = [
-  { label: "ReactJs & Vite", top: "23%", side: "right", offset: "1%" },
-  { label: "Gsap", top: "47%", side: "left", offset: "-7%" },
-  { label: "Tailwind CSS", top: "70%", side: "left", offset: "-20%" },
-  { label: "Framer Motion", top: "72%", side: "right", offset: "-17%" },
-];
+const ZONE_1 = "polygon(0% 0%, 70% 0%, 5% 100%, 0% 100%)";
+const ZONE_2 = "polygon(70% 0%, 100% 0%, 35% 100%, 5% 100%)";
+const ZONE_3 = "polygon(100% 0%, 100% 0%, 100% 100%, 35% 100%)";
 
-const services = [
-  "Développement Frontend",
-  "Développement Backend",
-  "Maintenance",
-  "Déploiement",
-];
+const SPOT_RADIUS = 90;
 
-const accents = ["bg-green-600", "bg-black", "bg-green-300", "bg-gray-300", "bg-green-400"];
+const imgBaseClass =
+  "absolute top-4 sm:top-6 lg:top-8 left-1/2 -translate-x-1/2 w-72 h-[26rem] sm:w-80 sm:h-[30rem] lg:w-[26rem] lg:h-[38rem] xl:w-[28rem] xl:h-[620px] object-cover object-top opacity-60";
+
+const textBaseClass =
+  "text-[18vw] sm:text-[16vw] lg:text-[14vw] font-extrabold tracking-tight text-neutral-400 whitespace-nowrap leading-none";
 
 function Hero() {
-  const sectionRef = useReveal();
+  const sectionRef = useIntersectionObserver();
+  const text1Ref = useRef(null);
+  const text2Ref = useRef(null);
+  const text3Ref = useRef(null);
+  const fill1Ref = useRef(null);
+  const fill2Ref = useRef(null);
+  const fill3Ref = useRef(null);
+  const hoverZoneRef = useRef(null);
+  const fillRefs = [fill1Ref, fill2Ref, fill3Ref];
 
-  const handleExploreClick = (e) => {
-    e.preventDefault();
-    document.getElementById("projets")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  useEffect(() => {
+    const tl = gsap.timeline({ delay: 0.2 });
+
+    tl.fromTo(
+      text1Ref.current,
+      { y: -80, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
+      0
+    )
+      .fromTo(
+        text2Ref.current,
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
+        0.1
+      )
+      .fromTo(
+        text3Ref.current,
+        { y: -80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, ease: "power3.out" },
+        0.2
+      );
+
+    return () => tl.kill();
+  }, []);
+
+  useEffect(() => {
+    const zone = hoverZoneRef.current;
+    if (!zone) return;
+
+    const setters = fillRefs.map((ref) => {
+      if (!ref.current) return null;
+      return {
+        x: gsap.quickTo(ref.current, "--mx", { duration: 0.15, ease: "power2.out" }),
+        y: gsap.quickTo(ref.current, "--my", { duration: 0.15, ease: "power2.out" }),
+        el: ref.current,
+      };
+    });
+
+    const handleMove = (e) => {
+      setters.forEach((s) => {
+        if (!s) return;
+        const rect = s.el.getBoundingClientRect();
+        const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+        const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+        s.x(xPct);
+        s.y(yPct);
+      });
+      fillRefs.forEach((ref) => {
+        if (ref.current) gsap.to(ref.current, { opacity: 1, duration: 0.2, overwrite: "auto" });
+      });
+    };
+
+    const handleLeave = () => {
+      fillRefs.forEach((ref) => {
+        if (ref.current) gsap.to(ref.current, { opacity: 0, duration: 0.35, overwrite: "auto" });
+      });
+    };
+
+    zone.addEventListener("mousemove", handleMove);
+    zone.addEventListener("mouseleave", handleLeave);
+
+    return () => {
+      zone.removeEventListener("mousemove", handleMove);
+      zone.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="accueil"
-      className="relative z-10 overflow-hidden font-poppins min-h-[770px] md:min-h-[630px] px-10 lg:px-20 flex items-center"
-    >
-      <div className="relative z-10 mx-auto max-w-6xl w-full px-6 md:px-10 py-10 md:pt-16">
-        <div className="grid md:grid-cols-[auto_1fr] gap-2 md:gap-4 items-center">
-          {/* Colonne nom */}
-          <div className="reveal flex flex-col items-center md:flex-row md:items-center justify-center md:justify-start gap-2 md:gap-4 md:-ml-14 shrink-0">
-            <div className="flex md:flex-col gap-1.5 md:gap-4">
-              {accents.map((c, i) => (
-                <span
-                  key={i}
-                  style={{ transitionDelay: `${i * 60}ms` }}
-                  className={`reveal-fade w-7 h-3 md:h-6 md:w-4 lg:h-9 rounded-sm ${c}`}
-                />
-              ))}
-            </div>
-            <span className="font-baloo font-black text-black leading-none md:leading-[0.7] tracking-tight [writing-mode:horizontal-tb] md:[writing-mode:vertical-rl] text-3xl md:text-4xl lg:text-[3rem] select-none">
-              CHRISTIAN
+    <section ref={sectionRef} id="accueil" className="relative min-h-screen font-poppins overflow-hidden bg-black">
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-black" style={{ clipPath: ZONE_1 }} />
+        <div className="absolute inset-0 bg-neutral-800" style={{ clipPath: ZONE_2 }} />
+        <div className="absolute inset-0 bg-black" style={{ clipPath: ZONE_3 }} />
+      </div>
+
+      <div ref={hoverZoneRef} className="absolute inset-0 z-20 cursor-default" />
+
+      <div
+        className="absolute inset-0 z-[5] pointer-events-none overflow-hidden mix-blend-exclusion"
+        aria-hidden="true"
+      >
+        <div className="absolute font-anton inset-0 flex items-end justify-center pb-10" style={{ clipPath: ZONE_1 }}>
+          <span ref={text1Ref} className={`${textBaseClass} relative`}>
+            DÉVELOPPEUR
+            <span
+              ref={fill1Ref}
+              className="absolute inset-0 font-anton text-white opacity-0"
+              style={{
+                "--mx": "50%",
+                "--my": "50%",
+                maskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
+                WebkitMaskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
+              }}
+              aria-hidden="true"
+            >
+              DÉVELOPPEUR
             </span>
-          </div>
-
-          {/* Colonne droite */}
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="flex flex-col items-center text-center md:items-start md:text-left">
-              <span className="reveal inline-block text-sm font-baloo font-bold uppercase tracking-wide text-gray-500 mb-8">
-                Disponible pour un poste
-              </span>
-
-              <h1 className="reveal text-3xl lg:text-5xl font-borel font-bold text-black leading-tight">
-                Développeur.
-              </h1>
-
-              <p className="reveal mt-2 text-gray-600 font-poppins text-sm lg:text-md max-w-md">
-                Développeur motivé par l'innovation, je transforme des idées en applications modernes, fonctionnelles et élégantes.
-              </p>
-
-              <div className="reveal mt-8 flex justify-center lg:justify-start items-center gap-4">
-                <a
-                  href="#projets"
-                  onClick={handleExploreClick}
-                  className="inline-flex items-center gap-2 justify-center w-full sm:w-auto sm:max-w-72 rounded-full bg-white text-gray-900 text-sm font-medium px-5 py-2 hover:bg-gray-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2"
-                >
-                  Explorer mes projets <Eye size={17} />
-                </a>
-              </div>
-            </div>
-
-            {/* Image + annotations */}
-            <div className="relative flex justify-center">
-              <img
-                src={heroimage}
-                alt="Christian Nomenjanahary"
-                className="reveal-scale w-64 h-72 sm:w-72 sm:h-96 lg:w-[24rem] xl:h-[500px] object-cover object-top relative z-10"
-              />
-
-              {skills.map((skill, i) => (
-                <div
-                  key={skill.label}
-                  style={{ transitionDelay: `${i * 100}ms`, top: skill.top, [skill.side]: skill.offset }}
-                  className={`reveal hidden xl:flex items-center gap-2 absolute z-20 ${
-                    skill.side === "left" ? "flex-row-reverse" : "flex-row"
-                  }`}
-                >
-                  <span
-                    className={`w-10 h-px border-t border-dashed border-gray-400 ${
-                      skill.side === "left" ? "origin-right" : "origin-left"
-                    }`}
-                  ></span>
-                  <span className="text-xs font-fredoka text-gray-600 bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm whitespace-nowrap">
-                    {skill.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+          </span>
+        </div>
+        <div className="absolute font-anton inset-0 flex items-end justify-center pb-10" style={{ clipPath: ZONE_2 }}>
+          <span ref={text2Ref} className={`${textBaseClass} relative`}>
+            DÉVELOPPEUR
+            <span
+              ref={fill2Ref}
+              className="absolute inset-0 font-anton text-white opacity-0"
+              style={{
+                "--mx": "50%",
+                "--my": "50%",
+                maskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
+                WebkitMaskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
+              }}
+              aria-hidden="true"
+            >
+              DÉVELOPPEUR
+            </span>
+          </span>
+        </div>
+        <div className="absolute font-anton inset-0 flex items-end justify-center pb-10" style={{ clipPath: ZONE_3 }}>
+          <span ref={text3Ref} className={`${textBaseClass} relative`}>
+            DÉVELOPPEUR
+            <span
+              ref={fill3Ref}
+              className="absolute inset-0 font-anton text-white opacity-0"
+              style={{
+                "--mx": "50%",
+                "--my": "50%",
+                maskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
+                WebkitMaskImage: `radial-gradient(circle ${SPOT_RADIUS}px at var(--mx) var(--my), black 0%, transparent 100%)`,
+              }}
+              aria-hidden="true"
+            >
+              DÉVELOPPEUR
+            </span>
+          </span>
         </div>
       </div>
 
-      {/* Pagination à points */}
-      <div className="reveal-fade flex flex-col gap-1.5 lg:gap-2 absolute right-3 sm:right-4 lg:right-6 top-1/2 -translate-y-1/2 z-30">
-        <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-gray-900"></span>
-        <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-gray-300"></span>
-        <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-gray-300"></span>
-      </div>
-
-      {/* Scroll vertical */}
-      <div className="reveal-fade hidden lg:flex items-center gap-2 absolute right-14 z-30 [writing-mode:vertical-rl]">
-        <span className="text-xs font-fredoka tracking-widest text-gray-500 uppercase">
-          Scroller pour explorer
-        </span>
-      </div>
-
-      <svg
-        className="absolute bottom-0 left-0 w-full h-72 z-20 pointer-events-none"
-        viewBox="0 0 1440 200"
-        preserveAspectRatio="none"
-      >
-        <path d="M0,120 C360,200 1080,40 1440,120 L1440,200 L0,200 Z" fill="#000" />
-      </svg>
-
-      {/* Services + copyright */}
-      <div className="reveal absolute bottom-0 left-0 w-full z-30 flex items-center justify-center px-4 sm:px-10 lg:px-24 pb-4 sm:pb-6 pointer-events-none">
-        <div className="flex items-center gap-3 sm:gap-4 lg:gap-6 overflow-x-auto pointer-events-auto scrollbar-none pr-4">
-          {services.map((service) => (
-            <span
-              key={service}
-              className="flex items-center justify-between text-center gap-1 text-[10px] sm:text-xs lg:text-md font-fredoka uppercase tracking-wide text-green-600 hover:text-green-500 transition-colors whitespace-nowrap shrink-0"
-            >
-              {".</"}
-              <span className="text-white/35">{service}</span>
-              {">"}
-            </span>
-          ))}
+      <div className="reveal absolute inset-0 z-10">
+        <div className="absolute inset-0" style={{ clipPath: ZONE_1 }}>
+          <img
+            src={heroimage}
+            alt="Christian Nomenjanahary"
+            className={`${imgBaseClass} grayscale contrast-125 brightness-75`}
+          />
+        </div>
+        <div className="absolute inset-0" style={{ clipPath: ZONE_2 }}>
+          <img
+            src={heroimage}
+            alt=""
+            aria-hidden="true"
+            className={`${imgBaseClass} grayscale contrast-125 brightness-90`}
+          />
+        </div>
+        <div className="absolute inset-0" style={{ clipPath: ZONE_3 }}>
+          <img
+            src={heroimage}
+            alt=""
+            aria-hidden="true"
+            className={`${imgBaseClass} grayscale contrast-125 brightness-75`}
+          />
         </div>
       </div>
     </section>

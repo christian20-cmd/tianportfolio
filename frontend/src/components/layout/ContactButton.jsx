@@ -138,7 +138,7 @@ export default function ContactButton() {
         onClick={toggle}
         aria-expanded={isOpen}
         aria-label={isOpen ? "Fermer le contact" : "Ouvrir le contact"}
-        className="absolute bottom-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-green-700 text-white shadow-xl hover:bg-green-800 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 z-20"
+        className="absolute bottom-0 right-0 flex items-center justify-center w-12 h-12 rounded-full bg-green-500 text-white shadow-xl hover:bg-green-800 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 z-20"
       >
         <LinkIcon ref={linkIconRef} className="absolute" size={24} />
         <X ref={xIconRef} className="absolute" size={24} />

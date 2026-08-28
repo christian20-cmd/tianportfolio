@@ -1,58 +1,45 @@
-// src/pages/Portfolio.jsx
-import { useEffect, useState } from "react"
-import { gsap } from "gsap"
-import { ScrollToPlugin } from "gsap/ScrollToPlugin"
-import Navbar from '../components/layout/Navbar'
-import AboutSection from '../components/sections/AboutSection'
-import Hero from '../components/sections/Hero'
-import Projets from '../components/sections/Projets'
-import ContactSection from '../components/sections/ContactSection'
-import ContactButton from '../components/layout/ContactButton'
-import ProjectShowcase from "../components/showcases/ProjectShowcase"
-
-gsap.registerPlugin(ScrollToPlugin)
+import { useEffect, useState } from "react";
+import Navbar from "../components/layout/Navbar";
+import AboutSection from "../components/sections/AboutSection";
+import Hero from "../components/sections/Hero";
+import Projets from "../components/sections/Projets";
+import ContactSection from "../components/sections/ContactSection";
+import ContactButton from "../components/layout/ContactButton";
+import ProjectShowcase from "../components/showcases/ProjectShowcase";
 
 export default function Portfolio() {
-  const [selectedProject, setSelectedProject] = useState(null)
+  const [selectedProject, setSelectedProject] = useState(null);
 
-  // ═══ Le projet vient déjà complet (avec screenshots) depuis data/projects.js ═══
   const handleProjectClick = (project) => {
-    setSelectedProject(project)
-  }
+    setSelectedProject(project);
+  };
 
   const handleBack = () => {
-    setSelectedProject(null)
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: { y: "#projets", offsetY: 100 },
-      ease: "power2.inOut",
-    })
-  }
+    setSelectedProject(null);
+  };
 
   useEffect(() => {
-    document.body.style.overflow = selectedProject ? "hidden" : ""
+    document.body.style.overflow = selectedProject ? "hidden" : "";
     return () => {
-      document.body.style.overflow = ""
-    }
-  }, [selectedProject])
+      document.body.style.overflow = "";
+    };
+  }, [selectedProject]);
 
   return (
     <>
-      <div className="relative min-h-screen bg-gradient-to-br font-fredoka from-gray-200 via-gray-100 to-gray-100">
+      <div className="relative bg-gradient-to-br font-fredoka from-gray-200 via-gray-100 to-gray-100">
         <div className="fixed inset-0 z-0 flex items-center justify-center overflow-hidden pointer-events-none">
-          <span className="text-[10rem] md:text-[24rem] font-baloo font-bold text-gray-900/5 select-none whitespace-nowrap">
-            {'</tian>'}
+          <span className="text-[7rem] md:text-[11.7rem] font-poppins uppercase font-baloo font-bold text-gray-900/10 select-none whitespace-nowrap">
+            Développeur.
           </span>
         </div>
 
         <div className="relative z-10">
           <Navbar />
-          <div>
-            <Hero />
-            <AboutSection />
-            <Projets onProjectClick={handleProjectClick} />
-            <ContactSection />
-          </div>
+          <Hero />
+          <AboutSection />
+          <Projets onProjectClick={handleProjectClick} />
+          <ContactSection />
           <ContactButton />
         </div>
       </div>
@@ -61,5 +48,5 @@ export default function Portfolio() {
         <ProjectShowcase project={selectedProject} onBack={handleBack} />
       )}
     </>
-  )
+  );
 }

@@ -5,7 +5,6 @@ export default function ProjectCard({ project, onClick }) {
   const {
     title,
     tagline,
-    description,
     categorie,
     number,
     year,
@@ -57,7 +56,8 @@ export default function ProjectCard({ project, onClick }) {
     onClick?.(project);
   };
 
-  const ActionIcon = actionMode === "link" ? ExternalLink : actionMode === "download" ? Download : null;
+  const ActionIcon =
+    actionMode === "link" ? ExternalLink : actionMode === "download" ? Download : null;
 
   return (
     <div
@@ -65,114 +65,96 @@ export default function ProjectCard({ project, onClick }) {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleAction()}
-      className="relative w-full max-w-[320px] mx-auto aspect-[12/12] rounded-[24px] border-[5px] border-black bg-black/20 overflow-hidden shadow-lg group cursor-pointer"
-    >
-      <div className="absolute inset-0">
+      className="group relative w-full flex flex-col rounded-sm overflow-hidden bg-[#EDE9E4] shadow cursor-pointer transition-shadow"    >
+      {/* Image zone — clean, no dark overlay, no badges on top of it */}
+      <div className="relative w-full aspect-5/4 overflow-hidden bg-neutral-400">
         {image ? (
           <img
             src={image}
             alt={title}
-            className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-500"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-neutral-900 to-black flex items-center justify-center">
-            <span className="text-white/10 text-5xl font-bold font-baloo">
+          <div className="w-full h-full bg-gradient-to-br from-neutral-200 to-neutral-100 flex items-center justify-center">
+            <span className="text-black/10 text-5xl font-bold font-baloo">
               {number}
             </span>
+          </div>
+        )}
+
+        {/* Small unobtrusive top-left dot like the reference (optional status indicator) */}
+        {currentStatus && (
+          <div className="absolute top-3 left-3 flex items-center">
+            <span className="relative flex h-2 w-2">
+              {status === "deployed" && (
+                <span
+                  className={`animate-ping absolute inline-flex h-full w-full rounded-full ${currentStatus.dot} opacity-75`}
+                />
+              )}
+              <span className={`relative inline-flex rounded-full h-2 w-2 ${currentStatus.dot}`} />
+            </span>
+          </div>
+        )}
+
+        {/* Type / action icon — minimal, top-right, only visible on hover */}
+        {(currentType || ActionIcon) && (
+          <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {currentType && (
+              <div className="flex items-center justify-center h-7 w-7 bg-white/90 backdrop-blur-sm rounded-full shadow-sm">
+                <currentType.icon className="w-10 h-10 text-black" />
+              </div>
+            )}
+            {ActionIcon && (
+              <div className="flex items-center justify-center h-7 w-7 bg-white/90 backdrop-blur-sm rounded-full shadow-sm">
+                <ActionIcon className="w-3.5 h-3.5 text-black" />
+              </div>
+            )}
+          </div>
+        )}
+
+        {inProgress && (
+          <div className="absolute bottom-32 right-28 -rotate-10">
+            <div className="border-2 border-red-600/90 rounded-md px-2 bg-white/80 backdrop-blur-sm">
+              <span className="text-red-600/90 text-lg font-bold uppercase tracking-widest font-baloo whitespace-nowrap">
+                En cours
+              </span>
+            </div>
           </div>
         )}
       </div>
 
-      {currentType && (
-        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-white border-2 border-black/60 rounded-full px-2 py-2">
-          <currentType.icon className="w-3.5 h-3.5 text-black shrink-0" />
-        </div>
-      )}
-
-      {ActionIcon && (
-        <div className="absolute top-16 right-4 z-20 flex h-8 w-8 items-center justify-center bg-white border-2 border-black/60 rounded-full">
-          <ActionIcon className="w-3.5 h-3.5 text-black" />
-        </div>
-      )}
-
-      {inProgress && (
-        <div className="absolute top-16 right-16 z-30 -rotate-12">
-          <div className="border-[3px] border-red-600/90 rounded-md px-2.5 py-1 relative">
-            <div className="absolute inset-[3px] border border-red-600/60 rounded-sm pointer-events-none" />
-            <span className="text-red-600/90 text-2xl font-bold uppercase tracking-widest font-baloo whitespace-nowrap [text-shadow:_0_0_1px_rgba(220,38,38,0.5)]">
-              En cours
-            </span>
-          </div>
-        </div>
-      )}
-
-      {tools?.length > 0 && (
-        <div className="absolute top-4 left-4 right-20 z-20 flex flex-row flex-wrap gap-1.5">
-          {tools.map((tool) => (
-            <div
-              key={tool.label}
-              className="flex items-center gap-1.5 bg-white border-2 border-black/60 backdrop-blur-sm rounded-full p-1.5"
-            >
-              <tool.icon className="w-4 h-4 shrink-0" style={{ color: tool.color }} />
-            </div>
-          ))}
-        </div>
-      )}
-
-      <div className="absolute left-0 right-0 bottom-0 top-[47%] bg-black/90 rounded-t-[22px] z-10" />
-
-      <div className="absolute left-0 top-[46%] right-0 bottom-0 z-20 px-4 pt-3 flex flex-col">
+      {/* Text zone — light background, bold title, small gray description, like the reference */}
+      <div className="flex flex-col pt-4 pb-2 px-1">
         <div className="flex items-center justify-between gap-2">
-          <h3 className="text-green-600 font-poppins text-sm leading-tight">
+          <h3 className="text-black font-poppins font-semibold text-xl leading-tight">
             {title}
           </h3>
-
-          {currentStatus && (
-            <div className="flex items-center gap-1.5 shrink-0 bg-white px-2.5 py-0.5 rounded-full font-bold">
-              <span className="relative flex h-1.5 w-1.5">
-                {status === "deployed" && (
-                  <span className={`animate-ping absolute inline-flex h-full w-full rounded-full ${currentStatus.dot} opacity-75`}></span>
-                )}
-                <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${currentStatus.dot}`}></span>
-              </span>
-              <span className="text-black text-[10px] font-poppins whitespace-nowrap">
-                {currentStatus.label}
-              </span>
-            </div>
-          )}
+          <span className="text-neutral-400 text-xl font-medium shrink-0">{year}</span>
         </div>
 
         {role && (
-          <span className="text-gray-400 text-[10px] font-poppins">{role}</span>
+          <span className="text-green-700 text-md font-poppins">{role}</span>
         )}
 
-        <p className="text-orange-400 text-xs mt-1">{tagline}</p>
-        <div className="text-red-400 text-[11px]">
-          Catégorie: <span className="text-white text-[11px] mt-1">{categorie}</span>
-        </div>
-        {description && (
-          <p className="text-gray-500 text-[11px] mt-1.5 leading-snug line-clamp-2">
-            {description}
-          </p>
+        {tagline && (
+          <p className="text-neutral-500 leading-snug">{tagline}</p>
         )}
 
-        <div className="mt-auto flex items-end justify-between pb-4">
-          <div className="flex items-baseline gap-1.5">
-            <span
-              className="text-3xl font-bold font-baloo bg-clip-text text-transparent bg-cover bg-center leading-none"
-              style={{
-                backgroundImage: image
-                  ? `url(${image})`
-                  : "linear-gradient(135deg, #ffffff, #9ca3af)",
-                WebkitTextStroke: "0.5px rgba(255,255,255,0.5)",
-              }}
-            >
-              {number}
-            </span>
-            <span className="text-gray-200 text-xs">Projet</span>
+        {categorie && (
+          <span className="text-neutral-400 text-[12px] mt-0.5">{categorie}</span>
+        )}
+
+        {tools?.length > 0 && (
+          <div className="flex flex-row flex-wrap gap-1.5 mt-2">
+            {tools.map((tool) => (
+              <tool.icon
+                key={tool.label}
+                className="w-8 h-8 shrink-0"
+                style={{ color: tool.color }}
+              />
+            ))}
           </div>
-          <span className="text-gray-200 font-semibold text-xs">{year}</span>
-        </div>
+        )}
       </div>
     </div>
   );
