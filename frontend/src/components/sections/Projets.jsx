@@ -40,14 +40,18 @@ export default function Projets({ onProjectClick }) {
       >
         <div
           ref={stripRef}
-          className="horiz-gallery-strip flex flex-nowrap will-change-transform gap-4 px-16"
+          className="horiz-gallery-strip flex flex-nowrap items-start will-change-transform gap-4 px-16"
         >
-          {projects.map((project) => {
+          {projects.map((project, index) => {
+            const isEven = index % 2 === 0;
             return (
               <div
                 key={project.slug ?? project.number}
                 className="project-wrap box-content shrink-0 py-16 transition-transform duration-300"
-                style={{ width: "min(350px, 80vw)" }}
+                style={{
+                  width: "min(350px, 80vw)",
+                  marginTop: isEven ? "0px" : "80px",
+                }}
               >
                 <ProjectCard project={project} onClick={onProjectClick} />
               </div>

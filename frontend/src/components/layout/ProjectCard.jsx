@@ -70,7 +70,7 @@ export default function ProjectCard({ project, onClick }) {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && handleAction()}
-      className="group relative w-full flex flex-col rounded-sm overflow-hidden bg-[#EDE9E4] shadow cursor-pointer transition-shadow"    >
+      className="group relative w-full flex flex-col rounded-sm overflow-hidden ring-2 ring-neutral-400 bg-[#EDE9E4] shadow cursor-pointer transition-shadow"    >
       <div className="relative w-full aspect-5/4 overflow-hidden bg-neutral-400">
         {image ? (
           <img

@@ -6,14 +6,7 @@ import { useLanguage } from "../../context/LanguageContext"; // adapte le chemin
 import { translations } from "../../i18n/translations"; // adapte le chemin si besoin
 import '@fontsource/anton';
 
-/**
- * Hero — mot énorme en blanc, POSÉ AU-DESSUS de la photo (z-index plus
- * haut). Le texte utilise mix-blend-mode: difference, donc là où il
- * chevauche la photo, il "disparaît"/se fond dans les couleurs de la
- * photo au lieu de rester blanc plein — l'effet de transparence demandé.
- * Sur le fond noir de la section, le blanc reste blanc (difference avec
- * du noir = pas de changement).
- */
+
 function Hero() {
   const sectionRef = useIntersectionObserver();
   const { lang } = useLanguage();
@@ -22,7 +15,10 @@ function Hero() {
   const textRef = useRef(null);
   const imgRef = useRef(null);
   const shadowRef = useRef(null);
+  const cursorRef = useRef(null);
+  const heroRef = useRef(null);
 
+  // Animation d'entrée
   useEffect(() => {
     const tl = gsap.timeline({ delay: 0.2 });
 
@@ -48,11 +44,45 @@ function Hero() {
     return () => tl.kill();
   }, [lang]);
 
+  // Curseur personnalisé — un rond plein qui suit la souris,
+  // uniquement dans la section Hero, avec un léger effet de "lag"
+  // fluide via gsap.quickTo, et mix-blend-mode: difference (géré en CSS).
+  useEffect(() => {
+    const section = heroRef.current;
+    const cursor = cursorRef.current;
+    if (!section || !cursor) return;
+
+    const xTo = gsap.quickTo(cursor, "x", { duration: 0.35, ease: "power3.out" });
+    const yTo = gsap.quickTo(cursor, "y", { duration: 0.35, ease: "power3.out" });
+
+    const handleMove = (e) => {
+      const rect = section.getBoundingClientRect();
+      xTo(e.clientX - rect.left);
+      yTo(e.clientY - rect.top);
+    };
+
+    const showCursor = () => gsap.to(cursor, { scale: 1, opacity: 1, duration: 0.25 });
+    const hideCursor = () => gsap.to(cursor, { scale: 0, opacity: 0, duration: 0.25 });
+
+    section.addEventListener("mousemove", handleMove);
+    section.addEventListener("mouseenter", showCursor);
+    section.addEventListener("mouseleave", hideCursor);
+
+    return () => {
+      section.removeEventListener("mousemove", handleMove);
+      section.removeEventListener("mouseenter", showCursor);
+      section.removeEventListener("mouseleave", hideCursor);
+    };
+  }, []);
+
   return (
     <section
-      ref={sectionRef}
+      ref={(el) => {
+        sectionRef.current = el;
+        heroRef.current = el;
+      }}
       id="accueil"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black hero-no-native-cursor"
     >
       {/* Photo — plus petite, en arrière-plan (z-10). */}
       <img
@@ -68,7 +98,7 @@ function Hero() {
         className="absolute bottom-4 left-1/2 -translate-x-1/2 w-[26%] h-5 bg-black/60 rounded-full blur-2xl z-0"
       />
 
-      {/* Mot géant — au premier plan (z-20), blanc, et transparent
+      {/* Mot géant — au premier plan (z-20), blanc, transparent
           (grâce au blend mode) là où il passe devant la photo. */}
       <h1
         ref={textRef}
@@ -80,6 +110,10 @@ function Hero() {
       >
         {t.hero.title}
       </h1>
+
+      {/* Curseur personnalisé : rond plein, suit la souris,
+          s'inverse (noir/blanc) selon ce qu'il survole. */}
+      <div ref={cursorRef} className="hero-cursor" aria-hidden="true" />
     </section>
   );
 }

@@ -52,6 +52,79 @@ export const translations = {
         github: "GitHub",
       },
     },
+    formation: {
+      sectionTitle: "Ma formation",
+      subtitle: "Mon parcours scolaire et les établissements fréquentés.",
+      discoverSchool: "Découvrir mon école",
+      items: [
+        {
+          year: "3ᵉ année (L3)",
+          status: "En cours",
+          period: "2025 - 2026",
+          school: "ENI",
+          city: "Fianarantsoa",
+          parcours: "Ingénierie des Systèmes d'Information Intégrés (ISII)",
+          current: true,
+        },
+        {
+          year: "2ᵉ année (L2)",
+          status: "Validée",
+          period: "2024 - 2025",
+          school: "ENI",
+          city: "Fianarantsoa",
+          parcours: "Ingénierie des Systèmes d'Information Intégrés (ISII)",
+          current: false,
+        },
+        {
+          year: "1ʳᵉ année (L1)",
+          status: "Validée",
+          period: "2023 - 2024",
+          school: "ENI",
+          city: "Fianarantsoa",
+          parcours: "Ingénierie des Systèmes d'Information Intégrés (ISII)",
+          current: false,
+        },
+      ],
+      expertiseAreas: [
+        { title: "Frontend", subtitle: "Interfaces" },
+        { title: "Backend", subtitle: "APIs" },
+        { title: "Conception", subtitle: "UI / UX & UML" },
+        { title: "Maintenance", subtitle: "Support" },
+        { title: "Déploiement", subtitle: "Mise en ligne" },
+      ],
+      map: {
+        schoolName: "ENI Tanambao Fianarantsoa",
+        addressLine: "Dépôt direct / Poste : BP 1487 (301)",
+      },
+      skillsTitle: "Compétences",
+      skillCategories: [
+        {
+          title: "Langages",
+          items: ["PHP", "JavaScript", "Python", "C#", "Java", "Dart", "HTML", "CSS"],
+        },
+        {
+          title: "Frameworks / Bibliothèques",
+          items: ["React.js", "Tailwind CSS", "React Native", "Flutter", "Express", "Node.js", "Laravel", "Gsap"],
+        },
+        {
+          title: "Bases de données",
+          items: ["MySQL", "PostgreSQL"],
+        },
+        {
+          title: "Méthodes / Conception",
+          items: ["UML", "Merise"],
+        },
+        {
+          title: "Outils",
+          items: ["Git", "GitHub", "GitLab", "Trello"],
+        },
+        {
+          title: "Design",
+          items: ["Figma", "AdobeXD"],
+        },
+      ],
+    },
+
   },
   en: {
     nav: [
@@ -105,6 +178,78 @@ export const translations = {
         email: "Email",
         github: "GitHub",
       },
+    },
+    formation: {
+      sectionTitle: "My Education",
+      subtitle: "My academic path and the institutions I've attended.",
+      discoverSchool: "Discover my school",
+      items: [
+        {
+          year: "3rd year (L3)",
+          status: "In progress",
+          period: "2025 - 2026",
+          school: "ENI",
+          city: "Fianarantsoa",
+          parcours: "Integrated Information Systems Engineering (ISII)",
+          current: true,
+        },
+        {
+          year: "2nd year (L2)",
+          status: "Completed",
+          period: "2024 - 2025",
+          school: "ENI",
+          city: "Fianarantsoa",
+          parcours: "Integrated Information Systems Engineering (ISII)",
+          current: false,
+        },
+        {
+          year: "1st year (L1)",
+          status: "Completed",
+          period: "2023 - 2024",
+          school: "ENI",
+          city: "Fianarantsoa",
+          parcours: "Integrated Information Systems Engineering (ISII)",
+          current: false,
+        },
+      ],
+      expertiseAreas: [
+        { title: "Frontend", subtitle: "Interfaces" },
+        { title: "Backend", subtitle: "APIs" },
+        { title: "Design", subtitle: "UI / UX & UML" },
+        { title: "Maintenance", subtitle: "Support" },
+        { title: "Deployment", subtitle: "Going live" },
+      ],
+      map: {
+        schoolName: "ENI Tanambao Fianarantsoa",
+        addressLine: "Direct deposit / Post Office: BP 1487 (301)",
+      },
+      skillsTitle: "Skills",
+      skillCategories: [
+        {
+          title: "Languages",
+          items: ["PHP", "JavaScript", "Python", "C#", "Java", "Dart", "HTML", "CSS"],
+        },
+        {
+          title: "Frameworks / Libraries",
+          items: ["React.js", "Tailwind CSS", "React Native", "Flutter", "Express", "Node.js", "Laravel", "Gsap"],
+        },
+        {
+          title: "Databases",
+          items: ["MySQL", "PostgreSQL"],
+        },
+        {
+          title: "Methods / Design",
+          items: ["UML", "Merise"],
+        },
+        {
+          title: "Tools",
+          items: ["Git", "GitHub", "GitLab", "Trello"],
+        },
+        {
+          title: "Design",
+          items: ["Figma", "AdobeXD"],
+        },
+      ],
     },
   },
 };

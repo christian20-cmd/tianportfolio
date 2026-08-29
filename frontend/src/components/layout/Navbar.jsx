@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import logo from "../../assets/logo.png";
 import {
-  InfoIcon,
+
   ChevronDown,
   Home,
   FolderKanban,
@@ -252,9 +252,6 @@ export default function Navbar() {
               </ul>
             </div>
 
-            <a href="#contact" className="text-green-400" aria-label={t.infoLabel}>
-              <InfoIcon size={30} />
-            </a>
           </div>
         </div>
       </nav>

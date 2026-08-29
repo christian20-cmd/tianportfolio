@@ -29,6 +29,7 @@ import {
   SiNodedotjs,
   SiPostgresql,
 } from "react-icons/si";
+import Formation from "../layout/Formation";
 
 gsap.registerPlugin(SplitText);
 
@@ -162,21 +163,7 @@ function SkillIcon({ icon: Icon, label, color, level, isSvg }) {
   );
 }
 
-function ServiceCard({ Icon, label, sub, stars = 5 }) {
-  return (
-    <div className="group flex flex-col items-center px-4 text-center sm:text-start">
-      <div className="flex gap-1 mb-2">
-        {[...Array(5)].map((_, i) => (
-          <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill={i < stars ? "#FFD700" : "#D1D5DB"} xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-          </svg>
-        ))}
-      </div>
-      <h3 className="font-poppins text-lg sm:text-xl font-bold uppercase text-black">{label}</h3>
-      <p className="font-poppins text-sm leading-relaxed text-black/60 max-w-[220px] sm:max-w-none">{sub}</p>
-    </div>
-  );
-}
+
 
 function createConfettiExplosion(container, colors) {
   const dotQuantity = 25;
@@ -406,7 +393,7 @@ function AboutSection() {
       <div className="reveal flex w-full flex-col items-center justify-center px-4 pb-8 text-center">
         <div className="mb-4 flex w-full max-w-xl items-center justify-center gap-2 sm:gap-3">
           <div className="bar-anim section-bar bg-green-600"></div>
-          <span className="text-xl sm:text-2xl font-bold text-black">{t.sectionTitle}</span>
+          <span className="text-2xl font-bold font-poppins text-black">{t.sectionTitle}</span>
           <div className="bar-anim section-bar bg-green-600"></div>
         </div>
       </div>
@@ -438,21 +425,14 @@ function AboutSection() {
       </div>
 
       <div className="h-1.5 w-full bg-gray-300" />
-      <div className="py-10">
-        <div className="grid grid-cols-1 gap-y-10 gap-x-5 sm:grid-cols-2 lg:grid-cols-5">
-          {t.services.map((service, i) => (
-            <ServiceCard
-              key={`${service.label}-${i}`}
-              Icon={serviceIcons[i]}
-              label={service.label}
-              sub={service.sub}
-              stars={4}
-            />
-          ))}
-        </div>
+      
+      
+
+      <div className="">
+        <Formation />
       </div>
 
-      <div className="flex justify-center py-8">
+      <div className="flex justify-center pb-8">
         <div className="reveal flex flex-wrap items-center justify-center gap-4 px-4">
           <span ref={downloadBtnRef} onClick={handleDownloadClick} className="inline-block">
             <FillButton

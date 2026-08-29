@@ -6,10 +6,12 @@ import Projets from "../components/sections/Projets";
 import ContactSection from "../components/sections/ContactSection";
 import ContactButton from "../components/layout/ContactButton";
 import ProjectShowcase from "../components/showcases/ProjectShowcase";
+
 import { LanguageProvider } from "../context/LanguageContext";
 
 export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [showPlusInfo, setShowPlusInfo] = useState(false);
 
   const handleProjectClick = (project) => {
     setSelectedProject(project);
@@ -20,11 +22,11 @@ export default function Portfolio() {
   };
 
   useEffect(() => {
-    document.body.style.overflow = selectedProject ? "hidden" : "";
+    document.body.style.overflow = selectedProject || showPlusInfo ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [selectedProject]);
+  }, [selectedProject, showPlusInfo]);
 
   return (
     <LanguageProvider>
@@ -36,7 +38,7 @@ export default function Portfolio() {
         </div>
 
         <div className="relative z-10">
-          <Navbar />
+          <Navbar onInfoClick={() => setShowPlusInfo(true)} />
           <Hero />
           <AboutSection />
           <Projets onProjectClick={handleProjectClick} />
@@ -48,6 +50,7 @@ export default function Portfolio() {
       {selectedProject && (
         <ProjectShowcase project={selectedProject} onBack={handleBack} />
       )}
+
     </LanguageProvider>
   );
 }
